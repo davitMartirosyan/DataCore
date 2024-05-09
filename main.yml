@@ -3,12 +3,12 @@ student_t newuser = {
     .age = 25,
     .fname = malloc(sizeof(char) * 6),
     .lname = malloc(sizeof(char) * 12),
-    .faculty = malloc(sizeof(char) * 9),
+    .faculty = malloc(sizeof(char) * 14),
 };
 
 strcpy(newuser.fname, "Davit");
 strcpy(newuser.lname, "Martirosyan");
-strcpy(newuser.faculty, "Digitain");
+strcpy(newuser.faculty, "Civil Defense");
 
 Create(&table, &newuser);
 
