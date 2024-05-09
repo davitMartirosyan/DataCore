@@ -13,15 +13,17 @@ DataCore is a simple, efficient, and scalable database management system impleme
 To use DataCore in your project, follow these steps:
 
 1. **Clone the Repository**:
-   ```bash
+   ```
    git clone https://github.com/yourusername/datacore.git
    ``` 
 2. **Go to the Root Repository**:
-   ```  cd datacore
-        make
+   ```  
+    cd datacore
+    make
    ``` 
 3. **And then run it**:
-   ```./datacore
+   ``` 
+   ./datacore
    ``` 
 
 ```c
