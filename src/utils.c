@@ -1,6 +1,6 @@
 #include "includes.h"
 
-void core_init(table_t* table)
+void datacore_init(table_t* table)
 {
     table = malloc(sizeof(table_t));
     if (!table)

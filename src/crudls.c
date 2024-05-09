@@ -1,6 +1,6 @@
 #include "includes.h"
 
-int     Create(table_t *table, student_t *student)
+int     datacore_Create(table_t *table, student_t *student)
 {
     // Create student from student struct
     //Format -> id:age:fname:lname:faculty\n
@@ -20,22 +20,22 @@ int     Create(table_t *table, student_t *student)
     return (1);
 }
 
-int     Retrieve(table_t *table, student_t *student)
+int     datacore_Retrieve(table_t *table, student_t *student)
 {
     return (0);
 }
 
-void    Delete(table_t *table, student_t* student)
+void    datacore_Delete(table_t *table, student_t* student)
 {
 
 }
 
-void    List(table_t *table)
+void    datacore_List(table_t *table)
 {
 
 }
 
-void    Sort(table_t *table, void (*sortF)(table_t*))
+void    datacore_Sort(table_t *table, void (*sortF)(table_t*))
 {
 
 }
