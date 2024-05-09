@@ -1,0 +1,19 @@
+student_t newuser = {
+    .id = 1,
+    .age = 25,
+    .fname = malloc(sizeof(char) * 6),
+    .lname = malloc(sizeof(char) * 12),
+    .faculty = malloc(sizeof(char) * 9),
+};
+
+strcpy(newuser.fname, "Davit");
+strcpy(newuser.lname, "Martirosyan");
+strcpy(newuser.faculty, "Digitain");
+
+Create(&table, &newuser);
+
+char *rd = readline("$: ");
+
+free(newuser.fname);
+free(newuser.lname);
+free(newuser.faculty);
