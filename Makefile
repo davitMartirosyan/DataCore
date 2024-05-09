@@ -1,4 +1,4 @@
-NAME = facebook
+NAME = datacore
 CC = gcc
 CC_FLAGS = #-Wall -Wextra -Werror
 LINKERS = -I includes/
