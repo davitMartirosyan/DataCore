@@ -4,11 +4,7 @@ int     datacore_Create(table_t *table, student_t *student)
 {
     // Create student from student struct
     //Format -> id:age:fname:lname:faculty\n
-    if (table->db == NULL)
-    {
-       	fprintf(stderr, "Could not connect to database\n");
-        return (-1);
-    }
+
     fprintf(table->db, __DATABASE_FORMAT__,\
         student->id,        \
         (int)student->age,  \
@@ -19,7 +15,7 @@ int     datacore_Create(table_t *table, student_t *student)
     return (1);
 }
 
-int    	datacore_Retrieve(table_t *table, id_t id,  student_t *student)
+int    	datacore_Retrieve(table_t *table, studid_t id,  student_t *student)
 {
 	if (table->db_fd == -1)
 	{

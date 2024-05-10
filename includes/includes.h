@@ -17,11 +17,11 @@
 //CRUDLS - > Create - Retrieve - Update - Delete - List - Sort
 
 int     datacore_Create(table_t *table, student_t *student);
-int     datacore_Retrieve(table_t *table, student_t *student);
+int     datacore_Retrieve(table_t *table, studid_t id, student_t *student);
 void    datacore_Delete(table_t *table, student_t* student);
 void    datacore_List(table_t *table);
 void    datacore_Sort(table_t *table, void (*sortF)(table_t*));
 void    datacore_Cleanup(table_t *table);
 
-void    datacore_init(table_t *table);
+void    datacore_init(table_t **table);
 #endif
