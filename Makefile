@@ -26,6 +26,6 @@ re: fclean all
 git:
 	@echo "Enter Commit: "
 	@read message; \
-	git add . && git commit -m "$$message"
+	git add . && git commit -m "$$message" && git push
 
 .PHONNY: all re clean fclean
