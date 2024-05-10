@@ -10,9 +10,10 @@ void datacore_init(table_t* table)
         exit(EXIT_FAILURE);
     }
     table->db = fopen(__DATABASE__, "a+");
-    if (!table->db)
+    table->db_fd = open(__DATABASE__, O_RDONLY);
+    if (!table->db || table->db_fd == -1)
     {
-        perror("Fopen");
+        fprintf(stderr, "Could not make connection");
         exit(EXIT_FAILURE);
     }
 }

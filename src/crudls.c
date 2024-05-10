@@ -4,13 +4,12 @@ int     datacore_Create(table_t *table, student_t *student)
 {
     // Create student from student struct
     //Format -> id:age:fname:lname:faculty\n
-    FILE* f = fopen(__DATABASE__, "a+");
-    if (f == NULL)
+    if (table->db == NULL)
     {
-        perror("fopen");
-        exit(EXIT_FAILURE);
+       	fprintf(stderr, "Could not connect to database\n");
+        return (-1);
     }
-    fprintf(f, __DATABASE_FORMAT__,\
+    fprintf(table->db, __DATABASE_FORMAT__,\
         student->id,        \
         (int)student->age,  \
         student->fname,     \
@@ -20,9 +19,21 @@ int     datacore_Create(table_t *table, student_t *student)
     return (1);
 }
 
-int     datacore_Retrieve(table_t *table, student_t *student)
+int    	datacore_Retrieve(table_t *table, id_t id,  student_t *student)
 {
-    return (0);
+	if (table->db_fd == -1)
+	{
+		fprintf(stderr, "Could not connect to database\n");
+		return (-1);
+	}
+	char *ln = get_next_line(table->db_fd);
+	while (ln)
+	{
+		printf("|%s|\n", ln);
+		free(ln);
+		ln = get_next_line(table->db_fd);
+	}
+    	return (0);
 }
 
 void    datacore_Delete(table_t *table, student_t* student)

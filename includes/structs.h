@@ -2,9 +2,9 @@
 #define STRUCTS_H
 #include "includes.h"
 
-typedef struct student_t    student_t;
-typedef struct table_t      table_t;
-
+typedef struct	student_t    student_t;
+typedef struct	table_t      table_t;
+typedef int	id_t;
 
 typedef struct student_t
 {
