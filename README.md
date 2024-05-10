@@ -24,37 +24,4 @@ To use DataCore in your project, follow these steps:
 3. **And then run it**:
    ``` 
    ./datacore
-   ``` 
-
-```c
-#include "datacore.h"
-
-int main() {
-    // Initialize DataCore
-    datacore_init();
-
-    // Perform CRUD operations
-    // Insert records
-    datacore_Create(table, student1);
-    datacore_Create(table, student2);
-
-    // Retrieve records
-    datacore_Retrieve(table, id);
-
-    // Update records
-    datacore_Update(table, id, new_data);
-
-    // Delete records
-    datacore_Delete(table, id);
-
-    // List data
-    datacore_List(table);
-
-    // Sort data
-    datacore_Sort(void (*criteria)(table));
-
-    // Clean up
-    datacore_Cleanup(table);
-
-    return 0;
-}
+   ```
