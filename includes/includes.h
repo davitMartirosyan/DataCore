@@ -1,8 +1,10 @@
 #ifndef INCLUDES_H
 #define INCLUDES_H
 
-#define __DATABASE__ "db.sql"
+#define __DATABASE__ "./db/db.sql"
 #define __DATABASE_FORMAT__ "%d:%d:%s:%s:%s\n"
+
+#define __METADATA__ "./meta/"
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -16,12 +18,15 @@
 
 //CRUDLS - > Create - Retrieve - Update - Delete - List - Sort
 
-int     datacore_Create(table_t *table, student_t *student);
-int     datacore_Retrieve(table_t *table, studid_t id, student_t *student);
-void    datacore_Delete(table_t *table, student_t* student);
-void    datacore_List(table_t *table);
-void    datacore_Sort(table_t *table, void (*sortF)(table_t*));
-void    datacore_Cleanup(table_t *table);
+int         dc_create(table_t *table, student_t *student);
+int         dc_retrieve(table_t *table, studid_t id, student_t *student);
+void        dc_delete(table_t *table, student_t* student);
+void        dc_list(table_t *table);
+void        dc_sort(table_t *table, void (*sortF)(table_t*));
+void        dc_cleanup(table_t *table);
 
-void    datacore_init(table_t **table);
+
+void        dc_query(table_t *table, char *query, ...);
+
+table_t     *dc_init(char *db);
 #endif

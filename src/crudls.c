@@ -1,10 +1,7 @@
 #include "includes.h"
 
-int     datacore_Create(table_t *table, student_t *student)
+int    dc_create(table_t *table, student_t *student)
 {
-    // Create student from student struct
-    //Format -> id:age:fname:lname:faculty\n
-
     fprintf(table->db, __DATABASE_FORMAT__,\
         student->id,        \
         (int)student->age,  \
@@ -15,34 +12,34 @@ int     datacore_Create(table_t *table, student_t *student)
     return (1);
 }
 
-int    	datacore_Retrieve(table_t *table, studid_t id,  student_t *student)
+int    	dc_retrieve(table_t *table, studid_t id,  student_t *student)
 {
-	if (table->db_fd == -1)
+	if (table->fd == -1)
 	{
 		fprintf(stderr, "Could not connect to database\n");
 		return (-1);
 	}
-	char *ln = get_next_line(table->db_fd);
+	char *ln = get_next_line(table->fd);
 	while (ln)
 	{
-		printf("|%s|\n", ln);
+		
 		free(ln);
-		ln = get_next_line(table->db_fd);
+		ln = get_next_line(table->fd);
 	}
-    	return (0);
+	return (0);
 }
 
-void    datacore_Delete(table_t *table, student_t* student)
+void    dc_delete(table_t *table, student_t* student)
 {
 
 }
 
-void    datacore_List(table_t *table)
+void    dc_list(table_t *table)
 {
 
 }
 
-void    datacore_Sort(table_t *table, void (*sortF)(table_t*))
+void    dc_sort(table_t *table, void (*sortF)(table_t*))
 {
 
 }
