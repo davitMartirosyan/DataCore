@@ -6,7 +6,8 @@ SRC = $(wildcard src/*.c) main.c
 OBJ = $(SRC:.c=.o)
 LIBRARY = libft/libft.a -lm -lreadline
 HEADERS = $(wildcard includes/*.h)
-
+DB = ./db
+META = ./meta
 all: $(NAME)
 
 $(NAME) : $(OBJ)
@@ -15,7 +16,11 @@ $(NAME) : $(OBJ)
 %.o : %.c $(HEADERS)
 	$(CC) $(LINKERS) $(CC_FLAGS) -c $< -o $@
 
-fclean: clean
+remove:
+	@rm -rf $(DB)/*
+	@rm -rf $(META)/*
+
+fclean: clean remove
 	@rm -rf $(NAME)
 
 clean:

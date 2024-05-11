@@ -7,6 +7,9 @@
 #define __METADATA__ "./meta/"
 #include <stdio.h>
 #include <unistd.h>
+#include <errno.h>
+#include <sched.h>
+#include <sys/resource.h>
 #include <string.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -26,7 +29,6 @@ void        dc_sort(table_t *table, void (*sortF)(table_t*));
 void        dc_cleanup(table_t *table);
 
 
-void        dc_query(table_t *table, char *query, ...);
-
+void *dc_query(table_t *table, char *query_text, ...);
 table_t     *dc_init(char *db);
 #endif
