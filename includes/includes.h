@@ -29,6 +29,6 @@ void        dc_sort(table_t *table, void (*sortF)(table_t*));
 void        dc_cleanup(table_t *table);
 
 
-void *dc_query(table_t *table, char *query_text, ...);
+void        *dc_query(table_t *table, char *query_text);
 table_t     *dc_init(char *db);
 #endif
