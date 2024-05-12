@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "*.bem": "cuda-cpp",
-        "includes.h": "c",
-        "cerrno": "c"
-    }
-}

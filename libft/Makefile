@@ -6,11 +6,12 @@
 #    By: dmartiro <dmartiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/28 20:17:29 by dmartiro          #+#    #+#              #
-#    Updated: 2024/05/10 01:30:28 by dmartiro         ###   ########.fr        #
+#    Updated: 2024/05/12 03:20:42 by dmartiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = ft_memset.c		\
+SRCS = $(wildcard ./*.c)
+# ft_memset.c		\
 		ft_bzero.c		\
 		ft_memcpy.c		\
 		ft_memmove.c 	\
@@ -51,16 +52,16 @@ SRCS = ft_memset.c		\
 		ft_putnbr_fd.c \
 		get_next_line.c \
 
-SRCSB =	ft_lstnew.c			\
-		ft_lstadd_front.c	\
-		ft_lstsize.c		\
-		ft_lstlast.c		\
-		ft_lstadd_back.c	\
-		ft_lstclear.c		\
-		ft_lstdelone.c		\
-		ft_lstiter.c		\
-		ft_lstmap.c			\
-		$(SRCS)
+# SRCSB = 	ft_lstnew.c			\
+			ft_lstadd_front.c	\
+			ft_lstsize.c		\
+			ft_lstlast.c		\
+			ft_lstadd_back.c	\
+			ft_lstclear.c		\
+			ft_lstdelone.c		\
+			ft_lstiter.c		\
+			ft_lstmap.c			\
+			$(SRCS)
 
 NAME = libft.a
 

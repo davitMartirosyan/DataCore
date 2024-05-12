@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmartiro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmartiro <dmartiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 20:15:00 by dmartiro          #+#    #+#             */
-/*   Updated: 2022/04/06 20:53:15 by dmartiro         ###   ########.fr       */
+/*   Updated: 2024/05/12 04:27:26 by dmartiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t n)
 		i++;
 	}
 	memory[i] = '\0';
+	free((char*)s);
 	return (memory);
 }

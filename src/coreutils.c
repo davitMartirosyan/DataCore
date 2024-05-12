@@ -15,8 +15,6 @@ table_t *dc_init(char *db)
     table->db = fopen(db, "a+");
     table->fd = fileno(table->db);
     table->metadb = fopen(table->metadbname, "a+");
-    printf("%s\n", table->metadbname);
-
     if (!table->db || table->fd == -1 || !table->metadb)
     {
         fprintf(stderr, "Could not make connection\n");
@@ -25,6 +23,22 @@ table_t *dc_init(char *db)
         free(table);
         exit(EXIT_FAILURE);
     }
+
+    table->cmap[0] = "create";
+    table->cmap[1] = "add";
+    table->cmap[2] = "retrieve";
+    table->cmap[3] = "update";
+    table->cmap[4] = "delete";
+    table->cmap[5] = "list";
+    table->cmap[6] = "sort";
+    
+    table->fmap[0] = &dc_create;
+    table->fmap[1] = &dc_add;
+    table->fmap[2] = &dc_retrieve;
+    table->fmap[3] = &dc_update;
+    table->fmap[4] = &dc_delete;
+    table->fmap[5] = &dc_list;
+    table->fmap[6] = &dc_sort;
 
     return (table);
 }

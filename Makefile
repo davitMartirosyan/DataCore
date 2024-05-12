@@ -11,10 +11,10 @@ HEADERS = $(wildcard includes/*.h)
 DB = ./db
 META = ./meta
 
-all: lib $(NAME)
+all: $(NAME)
 
 lib: 
-	@cd $(LIB) && make
+	@cd $(LIB) && make re
 
 cleanlib:
 	@rm -rf $(LIB)/objs $(ARCHIVE)
@@ -32,7 +32,7 @@ remove:
 fclean: clean remove
 	@rm -rf $(NAME)
 
-clean: cleanlib
+clean:
 	@rm -rf $(OBJ)
 
 re: fclean all

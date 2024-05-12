@@ -13,12 +13,16 @@ typedef struct  string_t        string_t;
 typedef struct  int_t           int_t;
 typedef struct  meta_t          meta_t;
 
+
+typedef void    (*fmap_t)(table_t *, char *);
+
+
 typedef enum type_t
 {
-    OPENBRACE   = '{',
-    CLOSEBRACE  = '}',
-    COLON       = ':'
-}type_t;
+    WORD,
+    TEMPLATE_EXPANSION_KEYS,
+    TEMPLATE_EXPANSION_VALUES
+} type_t;
 
 typedef struct student_t
 {
@@ -35,17 +39,20 @@ typedef struct table_t
     int     fd;
     char*   dbname;
     char*   metadbname;
+    char    *cmap[7];
     FILE*   db;
     FILE*   metadb;
-    query_t *query;
+    query_t *query; //?
     meta_t  **metainfo;
+    fmap_t  fmap[7];
 } table_t;
 
 typedef struct query_t
 {
-    char *query_text;
-    char **keys;
-    char **values;
+    int nodes;
+    bool iskeyset;
+    bool isvalueset;
+    querytok_t *tokens;
 }query_t;
 
 typedef struct querytok_t

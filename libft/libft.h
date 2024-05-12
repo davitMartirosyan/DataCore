@@ -6,7 +6,7 @@
 /*   By: dmartiro <dmartiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:22:35 by dmartiro          #+#    #+#             */
-/*   Updated: 2024/03/22 20:37:41 by dmartiro         ###   ########.fr       */
+/*   Updated: 2024/05/12 04:15:21 by dmartiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include "get_next_line.h"
+# define STRINGNPOS -1
 typedef struct s_list
 {
 	void			*content;
@@ -66,6 +67,8 @@ int		ft_strcmp(char *s1, char *s2);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 float   ft_atof(char *n);
+
+int		ft_find_first_of(char *pattern, char *s);
 
 t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
