@@ -45,9 +45,4 @@ table_t     *dc_init(char *db);
 
 //tokenization
 querytok_t  *lexer(char *query);
-void        addword(query_t **tokens, int *i, char *query);
-void        addexpansion(query_t **tokens, int *i, char *query);
-void        space(query_t **tokens, int *i, char *query);
-char        *word(char *query, int len, int s_pos);
-int         wordlen(char *wordstart, int s_pos);
 #endif

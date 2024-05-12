@@ -12,7 +12,7 @@ typedef struct  Orion           Orion;
 typedef struct  string_t        string_t;
 typedef struct  int_t           int_t;
 typedef struct  meta_t          meta_t;
-
+typedef struct  stack           stack;
 
 typedef void    (*fmap_t)(table_t *, char *);
 
@@ -49,9 +49,19 @@ typedef struct table_t
 
 typedef struct query_t
 {
-    int nodes;
+    int size;
+    int cap;
+    short maxexp;
+    int brace_count;
+    bool in;
+    bool out;
     bool iskeyset;
     bool isvalueset;
+    bool worderr;
+    bool experr;
+    bool sperr;
+    bool open;
+    bool close;
     querytok_t *tokens;
 }query_t;
 
@@ -72,7 +82,7 @@ typedef struct meta_t
 typedef struct Orion
 {
     char        *type;
-    int         int_tipe; // ?
+    int         int_type; // ?
     string_t    *s_type;
     int_t       *i_type;
 } Orion;
@@ -90,5 +100,12 @@ typedef struct int_t
     char        *val;
     int_t       *next;
 }int_t;
+
+typedef struct stack
+{
+    int top;
+    
+} stack;
+
 
 #endif
