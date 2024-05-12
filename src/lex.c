@@ -9,6 +9,8 @@ querytok_t *lexer(char *query)
     tok = malloc(sizeof(query_t));
     if (!tok)
         return (NULL);
+    tok->iskeyset = false;
+    tok->isvalueset = false;
     for(int i = 0; i < len;)
     {
         if (query[i] && ft_isalpha(query[i]) && (int)ft_strlen(query) > i)
@@ -19,6 +21,8 @@ querytok_t *lexer(char *query)
         i++;
     }
 
+    //fill iskeyset=true in query_t struct if  first part of expansions (keys) was found,
+    // now you can find second part e.g. (values) and fill isvalueset=true {} -> {} 
     free(tok);
     return(NULL);
 }
