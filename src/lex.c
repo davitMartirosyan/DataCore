@@ -13,8 +13,7 @@ querytok_t *lexer(char *query)
     {
         if (query[i] && ft_isalpha(query[i]) && (int)ft_strlen(query) > i)
             addword(&tok, &i, query);
-        if (query[i] && ft_isspace(query[i]))
-            space(&tok, &i, query);
+        if (query[i] && ft_isspace(query[i])){i++; continue;}
         if (query[i] && query[i] == '{')
             addexpansion(&tok, &i, query);
         i++;
