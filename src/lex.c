@@ -1,106 +1,145 @@
 #include "includes.h"
-void addword(query_t **tokens, int *pos, char *query);
-void addexpansion(query_t **tokens, int *pos, char *query);
 
-querytok_t *lexer(char *query)
+query_t *lexer(char *query)
 {
     query_t     *tok = NULL;
     int         len = ft_strlen(query);
     int         actual = 0;
 	int			i = 0;
+
     tok = malloc(sizeof(query_t));
-    if (!tok)
-        return (NULL);
-	tok->maxexp		= 0;
-	tok->brace_count = 0;
-    tok->iskeyset 	= false;
-    tok->isvalueset = false;
-	tok->worderr 	= false;
-	tok->experr 	= false;
-	tok->sperr		= false;
-	tok->open		= false;
-	tok->in			= false;
-	tok->out		= false;
+	tok->is_inside = false;
+
 	
+	if (!tok)
+		return (NULL);
 	while (query && query[i])
-    {
+	{
 		if (query[i] && ft_iswordpart(query[i]) && (int)ft_strlen(query) > i)
-			addword(&tok, &i, query);
-		else if (query[i] && ft_isspace(query[i]))
 		{
-			i++;
-			continue;
+			if (query[i] && tok->is_inside)
+				addexpfield(tok, query, &i);
+			else if(query[i] && !tok->is_inside)
+				addword(tok, query, &i);
 		}
-		else if (query[i] && query[i] == '{')
-			addexpansion(&tok, &i, query);
-		if (tok->worderr || tok->experr || tok->open || tok->close)
+		if (query[i] && query[i] == '{')
 		{
-			printf("error\n");
-			free(tok);
-			return (NULL);
+			if (tok->is_inside)
+			{
+				printf("Expansion on point of : %d\n", i);
+				return (NULL);
+			}
+			expansionopen(tok, query, &i);
 		}
+		if (query[i] && query[i] == '}')
+		{
+			if(!tok->is_inside)
+			{
+				printf("Expansion error on point of : %d\n", i);
+				return (NULL);
+			}
+			expansionclose(tok, query, &i);
+		}
+		if(query[i] && ft_isspace(i)){i++; continue;}
 		i++;
+	}
+	printf("*****************\n");
+    return(tok);
+}
+
+void	expansionopen(query_t *tok, char *query, int *i)
+{
+	char *expopen = ft_substr(ft_strdup(query), *i, 1);
+	tok->is_inside = true;
+	// printf("Op: |%s|\n", expopen);
+	append_node(&tok->tokens, expopen, EXPANSION_OPEN);
+	free(expopen);
+}
+
+void	expansionclose(query_t *tok, char *query, int *i)
+{
+	char *expclose = ft_substr(ft_strdup(query), *i, 1);
+	tok->is_inside = false;
+	// printf("Cl: |%s|\n", expclose);
+	append_node(&tok->tokens, expclose, EXPANSION_CLOSE);
+	free(expclose);
+}
+
+void addword(query_t *tok, char *query, int *i)
+{
+	int wordlen = 0;
+	int j = *i;
+
+	while (query[j] && (ft_iswordpart(query[j]) || query[j] == ':'))
+	{
+		j++;
+		wordlen++;
+	}
+	char *word = ft_substr(ft_strdup(query), *i, wordlen);
+	// printf("Word: |%s|\n", word);
+	append_node(&tok->tokens, word, WORD);
+
+	free(word);
+	*i += wordlen;
+}
+
+void	addexpfield(query_t *tok, char *query, int *i)
+{
+	int expansion_len = 0;
+	int j = *i;
+
+	while (query[j] && query[j] != ',' && query[j] != '}')
+	{
+		j++;
+		expansion_len++;
+	}
+	char *expansion_field = ft_substr(ft_strdup(query), *i, expansion_len);
+	// printf("Field: |%s|\n", expansion_field);
+	append_node(&tok->tokens, expansion_field, EXPANSION_FIELD);
+	free(expansion_field);
+	*i += expansion_len;
+}
+
+
+void print_tokens(querytok_t *toks)
+{
+	while (toks)
+	{
+		printf("type: %d | tok: %s\n", toks->type, toks->token);
+		toks = toks->next;
+	}
+}
+
+
+querytok_t *create_node(char *word, type_t type)
+{
+    querytok_t *new_node = malloc(sizeof(querytok_t));
+    if (!new_node)
+		return (NULL);
+
+    new_node->token = ft_strdup(word);
+    if (!new_node->token) {free(new_node); return NULL;}
+    new_node->type = type;
+    new_node->next = NULL;
+    new_node->prev = NULL;
+    return new_node;
+}
+
+void append_node(querytok_t **tokens, char *word, type_t type)
+{
+    querytok_t *new_node = create_node(word, type);
+    if (!new_node)
+		return ;
+
+    if (!(*tokens))
+    {
+        *tokens = new_node;
+        return;
     }
-    //fill iskeyset=true in query_t struct if  first part of expansions (keys) was found,
-    // now you can find second part e.g. (values) and fill isvalueset=true {} -> {}
-    free(tok);
-	free(query);
-    return(NULL);
-}
 
-void addword(query_t **tokens, int *pos, char *query)
-{
-	int e_pos = *pos;
-	int s_pos = *pos;
-	char *wordpart;
-
-	while (query[e_pos])
-	{
-		if (!query[e_pos] || !ft_iswordpart(query[e_pos]))
-			break;
-		e_pos++;
-	}
-	wordpart = ft_substr(ft_strdup(query), s_pos, (e_pos - s_pos));
-	printf("wordpart: (%s)\n", wordpart);
-	free(wordpart);
-	*pos += (e_pos - s_pos);
-}
-
-void addexpansion(query_t **tokens, int *pos, char *query)
-{
-	int s_pos = *pos;
-	int e_pos = *pos + 1;
-	char *expansion;
-
-	(*tokens)->open = true;
-	// printf("%s\n", query+s_pos);
-	while (query[e_pos])
-	{
-		if (!query[e_pos] || !ft_iswordpart(query[e_pos]))
-		{
-			if (query[e_pos] == '}')
-			{
-				(*tokens)->close = true;
-				break;
-			}
-			else if (query[e_pos] == '{')
-			{
-				(*tokens)->experr = true;
-				break;
-			}
-		}
-		e_pos++;
-	}
-	// printf("%s\n", query+e_pos);
-
-	if ((*tokens)->close && !(*tokens)->experr)
-	{
-		expansion = ft_substr(ft_strdup(query), s_pos, (e_pos - s_pos + 1));
-		printf("expansion: (%s)\n", expansion);
-		free(expansion);
-		(*tokens)->open		= false;
-		(*tokens)->experr	= false;
-		(*tokens)->close	= false;
-	}
-	*pos += (e_pos - s_pos);
+    querytok_t *current = *tokens;
+    while (current->next)
+		current = current->next;
+    current->next = new_node;
+    new_node->prev = current;
 }

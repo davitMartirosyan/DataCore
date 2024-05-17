@@ -7,7 +7,6 @@ typedef struct	table_t         table_t;
 typedef int                     studid_t;
 typedef struct  query_t         query_t;
 typedef struct  querytok_t      querytok_t;
-typedef enum    type_t          type_t;
 typedef struct  Orion           Orion;
 typedef struct  string_t        string_t;
 typedef struct  int_t           int_t;
@@ -20,8 +19,12 @@ typedef void    (*fmap_t)(table_t *, char *);
 typedef enum type_t
 {
     WORD,
-    TEMPLATE_EXPANSION_KEYS,
-    TEMPLATE_EXPANSION_VALUES
+    SP,
+    EXPANSION_OPEN,
+    EXPANSION_CLOSE,
+    EXPANSION_FIELD,
+    COMMA,
+    COLON,
 } type_t;
 
 typedef struct student_t
@@ -51,17 +54,8 @@ typedef struct query_t
 {
     int size;
     int cap;
-    short maxexp;
-    int brace_count;
-    bool in;
-    bool out;
-    bool iskeyset;
-    bool isvalueset;
-    bool worderr;
-    bool experr;
-    bool sperr;
-    bool open;
-    bool close;
+    int maxexp;
+    bool is_inside;
     querytok_t *tokens;
 }query_t;
 

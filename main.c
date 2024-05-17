@@ -1,4 +1,5 @@
 #include "./includes/includes.h"
+extern const char  * const sys_siglist[];
 
 int main(int ac, char **av, char **envp)
 {
@@ -7,25 +8,17 @@ int main(int ac, char **av, char **envp)
 	(void)av;
 	(void)envp;
     table_t *table = dc_init(__DATABASE__);
-
-	// Orion *create = dc_query(table, "CREATE users {char fname, char lname, int age}");
-	// Orion *add    = dc_query(table, "ADD TO users{    fname, age, lname      }    {   Davit, 25, Martirosyan            }    ");
-	// Orion *ret    = dc_query(table, "RETREIVE FROM users {fname, lname} OF id:1");
-	// Orion *upd    = dc_query(table, "UPDATE IN users {fname} {Davo} OF id:1");
-	// Orion *del    = dc_query(table, "DELETE FROM users id:1");
-	// Orion *lst    = dc_query(table, "LIST users");
-	// Orion *srt    = dc_query(table, "SORT users BY fname"); /// ??????????????????????
-	
-	// Orion *create = dc_query(table, "create users {char fname, char lname, int age}");
-	char *query = "ADD TO users{fname, age, lname}    {   Davit, 25, Martirosyan            }    ";
-	int spos = ft_find_first_of("{", query);
-	int epos = ft_find_first_of("}", query + spos);
-
-	printf("%s\n", query + epos);
-	char *exp = ft_substr(ft_strdup(query),  spos, (epos - spos));
-	// printf("[%s]\n", exp);
-	free(exp);
+	while (1)
+	{
+		char *orion = readline("$orion: ");
+		// Orion *create = dc_query(table, "CREATE users    {                 char fname    , char lname           , int         :      age              } id:1");
+		// Orion *add    = dc_query(table, "ADD TO users{    fname, age, lname    }    {   Davit, 25, Martirosyan            }    ");
+		// Orion *ret    = dc_query(table, "RETREIVE FROM users {fname, lname} OF id:1");
+		Orion *upd    = dc_query(table, orion);
+		"UPDATE IN users {fname}  {Davo} OF id:1";
+		// Orion *del    = dc_query(table, "DELETE FROM users id:1");
+		// Orion *lst    = dc_query(table, "LIST users");
+		// Orion *srt    = dc_query(table, "SORT users BY fname"); /// ??????????????????????
+	}
 	dc_cleanup(table);
 }
-// int spos = ft_find_first_of("{", query);
-// ft_substr(spos, (ft_find_first_of("}", query + spos) - spos) 

@@ -1,6 +1,6 @@
 NAME = datacore
 CC = gcc
-CC_FLAGS = #-Wall -Wextra -Werror
+CC_FLAGS = -pedantic #-Wall -Wextra -Werror 
 LINKERS = -I includes/
 SRC = $(wildcard src/*.c) main.c
 OBJ = $(SRC:.c=.o)

@@ -44,5 +44,17 @@ table_t     *dc_init(char *db);
 
 
 //tokenization
-querytok_t  *lexer(char *query);
+query_t     *lexer(char *query);
+void        expansionopen(query_t *tok, char *query, int *i);
+void        expansionclose(query_t *tok, char *query, int *i);
+void        addword(query_t *tok, char *query, int *i);
+void        addexpfield(query_t *tok, char *query, int *i);
+
+querytok_t  *create_node(char *word, type_t type);
+void        append_node(querytok_t **tokens, char *word, type_t type);
+void        print_tokens(querytok_t *toks);
+
+
+// void        create_node(querytok_t **tokens, char *word, type_t type);
+
 #endif
