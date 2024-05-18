@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.bem": "cuda-cpp",
-        "libft.h": "c"
+        "libft.h": "c",
+        "__config": "c"
     }
 }

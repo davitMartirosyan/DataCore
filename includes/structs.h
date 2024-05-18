@@ -25,6 +25,7 @@ typedef enum type_t
     EXPANSION_FIELD,
     COMMA,
     COLON,
+    IDENTIFIER,
 } type_t;
 
 typedef struct student_t
@@ -56,6 +57,10 @@ typedef struct query_t
     int size;
     int cap;
     int maxexp;
+    int expression_count;
+    int expansion_count;
+    int expansion_key_count;
+    int expansion_value_count;
     bool is_inside;
     querytok_t *tokens;
 }query_t;
@@ -63,7 +68,7 @@ typedef struct query_t
 typedef struct querytok_t
 {
     type_t type;
-    char *token;
+    char *lexeme;
     querytok_t *prev;
     querytok_t *next;
 }querytok_t;

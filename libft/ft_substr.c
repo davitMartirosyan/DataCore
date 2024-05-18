@@ -33,6 +33,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t n)
 		i++;
 	}
 	memory[i] = '\0';
-	free((char*)s);
+	// free((char*)s);
 	return (memory);
 }

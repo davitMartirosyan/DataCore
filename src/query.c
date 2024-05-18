@@ -7,24 +7,24 @@ void    free_tokens(query_t **qtok)
     while (current != NULL)
     {
         next_node = current->next;
-        free(current->token); // Free the duplicated string
+        free(current->lexeme); // Free the duplicated string
         free(current);        // Free the node itself
         current = next_node;
     }
-    (*qtok)->tokens = NULL;
-    (*qtok) = NULL;
 }
 
 Orion   *dc_query(table_t *table, char *query)
 {
     if (!query)
         return (NULL);
-
-    query_t *q = lexer(ft_strtrim(ft_strdup(query), " \n\t\r\b"));
+    query_t *q = lexer(query);
     if (q)
     {
         print_tokens(q->tokens);
         free_tokens(&q);
+        free(q);
+        q = NULL;
     }
+    // system("leaks datacore");
     return (NULL);
 }

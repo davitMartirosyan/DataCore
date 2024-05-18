@@ -10,10 +10,10 @@ int main(int ac, char **av, char **envp)
 	while (1)
 	{
 		char *q = readline("$Orion: ");
-		if (!q)
-			break;
 		Orion *query = dc_query(table, q);
-
+		free(q);
 	}
+
 	dc_cleanup(&table);
+	
 }

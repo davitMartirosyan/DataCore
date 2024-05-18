@@ -2,17 +2,19 @@
 
 query_t *lexer(char *query)
 {
-    query_t     *tok = NULL;
-    int         len = ft_strlen(query);
-    int         actual = 0;
-	int			i = 0;
+	query_t     *tok = NULL;
+	int         len = ft_strlen(query);
+	int         actual = 0;
+	int					i = 0;
 
-    tok = malloc(sizeof(query_t));
+	tok = malloc(sizeof(query_t));
 	tok->is_inside = false;
-	tok->maxexp = 0;
 	tok->size = 0;
 	tok->cap = 0;
+	tok->expression_count = 0;
+	tok->expansion_count = 0;
 	tok->tokens = NULL;
+
 	if (!tok)
 		return (NULL);
 	while (query && query[i])
@@ -42,16 +44,15 @@ query_t *lexer(char *query)
 			}
 			expansionclose(tok, query, &i);
 		}
-		if(query[i] && ft_isspace(i)){i++; continue;}
+		if (query[i] && ft_isspace(i)){i++; continue;}
 		i++;
 	}
-	printf("*****************\n");
-    return(tok);
+	return(tok);
 }
 
 void	expansionopen(query_t *tok, char *query, int *i)
 {
-	char *expopen = ft_substr(ft_strdup(query), *i, 1);
+	char *expopen = ft_substr(query, *i, 1);
 	tok->is_inside = true;
 	// printf("Op: |%s|\n", expopen);
 	append_node(&tok->tokens, expopen, EXPANSION_OPEN);
@@ -60,7 +61,7 @@ void	expansionopen(query_t *tok, char *query, int *i)
 
 void	expansionclose(query_t *tok, char *query, int *i)
 {
-	char *expclose = ft_substr(ft_strdup(query), *i, 1);
+	char *expclose = ft_substr(query, *i, 1);
 	tok->is_inside = false;
 	// printf("Cl: |%s|\n", expclose);
 	append_node(&tok->tokens, expclose, EXPANSION_CLOSE);
@@ -77,10 +78,11 @@ void addword(query_t *tok, char *query, int *i)
 		j++;
 		wordlen++;
 	}
-	char *word = ft_substr(ft_strdup(query), *i, wordlen);
+	char *wd = ft_substr(query, *i, wordlen);
 	// printf("Word: |%s|\n", word);
-	append_node(&tok->tokens, word, WORD);
-	free(word);
+	append_node(&tok->tokens, wd, WORD);
+	free(wd);
+	wd = NULL;
 	*i += wordlen;
 }
 
@@ -94,23 +96,21 @@ void	addexpfield(query_t *tok, char *query, int *i)
 		j++;
 		expansion_len++;
 	}
-	char *expansion_field = ft_substr(ft_strdup(query), *i, expansion_len);
+	char *expansion_field = ft_substr(query, *i, expansion_len);
 	// printf("Field: |%s|\n", expansion_field);
 	append_node(&tok->tokens, expansion_field, EXPANSION_FIELD);
 	free(expansion_field);
 	*i += expansion_len;
 }
 
-
 void print_tokens(querytok_t *toks)
 {
 	while (toks)
 	{
-		printf("type: %d | tok: %s\n", toks->type, toks->token);
+		printf("type: %d | tok: %s\n", toks->type, toks->lexeme);
 		toks = toks->next;
 	}
 }
-
 
 querytok_t *create_node(char *word, type_t type)
 {
@@ -118,8 +118,8 @@ querytok_t *create_node(char *word, type_t type)
     if (!new_node)
 		return (NULL);
 
-    new_node->token = ft_strdup(word);
-    if (!new_node->token) {free(new_node); return NULL;}
+    new_node->lexeme = ft_strdup(word);
+    if (!new_node->lexeme) {free(new_node); return NULL;}
     new_node->type = type;
     new_node->next = NULL;
     new_node->prev = NULL;
@@ -137,7 +137,6 @@ void append_node(querytok_t **tokens, char *word, type_t type)
         *tokens = new_node;
         return;
     }
-
     querytok_t *current = *tokens;
     while (current->next)
 		current = current->next;
