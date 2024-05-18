@@ -10,33 +10,32 @@ table_t *dc_init(char *db)
         free(table);
         exit(EXIT_FAILURE);
     }
-    _initialize(&table);
+    __construct(&table);
     return (table);
 }
 
-void dc_cleanup(table_t *table)
+void dc_cleanup(table_t **table)
 {
-    if (!table)
-        return ;    
+    if (!*table)
+        return ;
     // fclose(table->db);
     // close(table->fd);
-    free(table->dbase_name);
-    free(table->meta_dbase_name);
-    free(table->metainfo); 
-    free(table);
+    free((*table)->dbase_name);
+    free((*table)->meta_dbase_name);
+    free((*table)->metainfo); 
+    __destruct(table);
 }
 
 
-void     _initialize(table_t **table)
+void     __construct(table_t **table)
 {
-    (*table)->fd = -1;              // file descriptor
-    (*table)->dbase = NULL;         // FILE
-    (*table)->dbase_name = NULL;    // char * name of database 
+    (*table)->fd = -1;                      // file descriptor
+    (*table)->dbase = NULL;                 // FILE
+    (*table)->dbase_name = NULL;            // char * name of database 
 
-    (*table)->meta_dbase = NULL;
-    (*table)->meta_dbase_name = NULL;
+    (*table)->meta_dbase = NULL;            // FILE
+    (*table)->meta_dbase_name = NULL;       //char * name of meta file name
     (*table)->metainfo = NULL;
-
 
     (*table)->cmap[0] = "create";
     (*table)->cmap[1] = "add";
@@ -52,4 +51,15 @@ void     _initialize(table_t **table)
     (*table)->fmap[4] = &dc_delete;
     (*table)->fmap[5] = &dc_list;
     (*table)->fmap[6] = &dc_sort;
+}
+
+void __destruct(table_t **table)
+{
+    (*table)->fd = -1;              // file descriptor
+    (*table)->dbase = NULL;         // FILE
+    (*table)->dbase_name = NULL;    // char * name of database 
+    (*table)->meta_dbase = NULL;
+    (*table)->meta_dbase_name = NULL;
+    (*table)->metainfo = NULL;
+    free(*table);
 }

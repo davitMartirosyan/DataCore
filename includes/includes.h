@@ -36,12 +36,13 @@ void        dc_update(table_t *table, char *query);
 void        dc_delete(table_t *table, char *query);
 void        dc_list(table_t *table, char *query);
 void        dc_sort(table_t *table, char *query);
-void        dc_cleanup(table_t *table);
 
 
 //table : utils
 table_t     *dc_init(char *db);
-void        _initialize(table_t **table);
+void        dc_cleanup(table_t **table);
+void        __construct(table_t **table);
+void        __destruct(table_t **table);
 
 
 //tokenization

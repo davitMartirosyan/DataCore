@@ -15,5 +15,5 @@ int main(int ac, char **av, char **envp)
 		Orion *query = dc_query(table, q);
 
 	}
-	dc_cleanup(table);
+	dc_cleanup(&table);
 }
