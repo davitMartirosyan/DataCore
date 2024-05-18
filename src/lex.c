@@ -9,8 +9,10 @@ query_t *lexer(char *query)
 
     tok = malloc(sizeof(query_t));
 	tok->is_inside = false;
-
-	
+	tok->maxexp = 0;
+	tok->size = 0;
+	tok->cap = 0;
+	tok->tokens = NULL;
 	if (!tok)
 		return (NULL);
 	while (query && query[i])
