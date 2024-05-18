@@ -1,4 +1,4 @@
-#include "./includes/includes.h"
+#include "includes.h"
 
 int main(int ac, char **av, char **envp)
 {
@@ -13,7 +13,7 @@ int main(int ac, char **av, char **envp)
 		if (!q)
 			break;
 		Orion *query = dc_query(table, q);
-		
+
 	}
 	dc_cleanup(table);
 }

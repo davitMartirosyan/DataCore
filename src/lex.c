@@ -28,7 +28,7 @@ query_t *lexer(char *query)
 		{
 			if (tok->is_inside)
 			{
-				printf("Expansion on point of : %d\n", i);
+				printf("Epression error on point of : %d\n", i);
 				return (NULL);
 			}
 			expansionopen(tok, query, &i);
@@ -37,7 +37,7 @@ query_t *lexer(char *query)
 		{
 			if(!tok->is_inside)
 			{
-				printf("Expansion error on point of : %d\n", i);
+				printf("Epression error on point of : %d\n", i);
 				return (NULL);
 			}
 			expansionclose(tok, query, &i);
@@ -80,7 +80,6 @@ void addword(query_t *tok, char *query, int *i)
 	char *word = ft_substr(ft_strdup(query), *i, wordlen);
 	// printf("Word: |%s|\n", word);
 	append_node(&tok->tokens, word, WORD);
-
 	free(word);
 	*i += wordlen;
 }

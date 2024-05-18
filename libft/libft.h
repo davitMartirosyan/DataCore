@@ -6,7 +6,7 @@
 /*   By: dmartiro <dmartiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:22:35 by dmartiro          #+#    #+#             */
-/*   Updated: 2024/05/18 15:50:51 by dmartiro         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:30:00 by dmartiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <math.h>
 # include "get_next_line.h"
 # define STRINGNPOS -1
@@ -69,6 +70,7 @@ int		ft_tolower(int c);
 int		ft_toupper(int c);
 float   ft_atof(char *n);
 int		ft_find_first_of(char *pattern, char *s);
+bool	ft_isexpansion_pack_sym(int ch);
 
 t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);

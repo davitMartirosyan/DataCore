@@ -21,7 +21,10 @@ Orion   *dc_query(table_t *table, char *query)
         return (NULL);
 
     query_t *q = lexer(ft_strtrim(ft_strdup(query), " \n\t\r\b"));
-    print_tokens(q->tokens);
-    free_tokens(&q);
+    if (q)
+    {
+        print_tokens(q->tokens);
+        free_tokens(&q);
+    }
     return (NULL);
 }
