@@ -1,0 +1,1 @@
+users={[char:fname];[char:lname];[int:age]}

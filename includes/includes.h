@@ -41,6 +41,7 @@ void        dc_cleanup(table_t *table);
 
 //table : utils
 table_t     *dc_init(char *db);
+void        _initialize(table_t **table);
 
 
 //tokenization

@@ -11,7 +11,8 @@ void    free_tokens(query_t **qtok)
         free(current);        // Free the node itself
         current = next_node;
     }
-    *qtok = NULL;
+    (*qtok)->tokens = NULL;
+    (*qtok) = NULL;
 }
 
 Orion   *dc_query(table_t *table, char *query)

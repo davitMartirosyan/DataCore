@@ -29,7 +29,7 @@ remove:
 	@rm -rf $(DB)/*
 	@rm -rf $(META)/*
 
-fclean: clean remove
+fclean: clean
 	@rm -rf $(NAME)
 
 clean:

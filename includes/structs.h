@@ -40,14 +40,15 @@ typedef struct student_t
 typedef struct table_t
 {
     int     fd;
-    char*   dbname;
-    char*   metadbname;
-    char    *cmap[7];
-    FILE*   db;
-    FILE*   metadb;
-    query_t *query; //?
+    char*   dbase_name;
+    FILE*   dbase;
+
+    char*   meta_dbase_name;
+    FILE*   meta_dbase;
     meta_t  **metainfo;
+    
     fmap_t  fmap[7];
+    char    *cmap[7];
 } table_t;
 
 typedef struct query_t
