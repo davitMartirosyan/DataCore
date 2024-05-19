@@ -47,10 +47,16 @@ void        __destruct(table_t **table);
 
 //tokenization
 query_t     *lexer(char *query);
-void        expansionopen(query_t *tok, char *query, int *i);
-void        expansionclose(query_t *tok, char *query, int *i);
+int         expansion(query_t *tok, char *query, int*i);
+int         identify(query_t *tok, char *query, int *i);
 void        addword(query_t *tok, char *query, int *i);
-void        addexpfield(query_t *tok, char *query, int *i);
+int         checkFields(char **fields, int size);
+int         isValid(char *field);
+int         validType(char *type);
+
+// void        expansionopen(query_t *tok, char *query, int *i);
+// void        expansionclose(query_t *tok, char *query, int *i);
+// void        addexpfield(query_t *tok, char *query, int *i);
 
 querytok_t  *create_node(char *word, type_t type);
 void        append_node(querytok_t **tokens, char *word, type_t type);

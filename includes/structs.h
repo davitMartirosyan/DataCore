@@ -57,10 +57,11 @@ typedef struct query_t
     int size;
     int cap;
     int maxexp;
-    int expression_count;
-    int expansion_count;
-    int expansion_key_count;
-    int expansion_value_count;
+    int id_count; //-> <identify>
+    int expression_count; //-> WORD EXPANSION ... etc
+    int expansion_count; // -> {}
+    int expansion_key_count; // {keys} {}
+    int expansion_value_count; // {} {values}
     bool is_inside;
     querytok_t *tokens;
 }query_t;

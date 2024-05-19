@@ -126,3 +126,40 @@ Orion *add    = dc_query(table, "                        ADD                    
 		// Orion *del    = dc_query(table, "DELETE FROM users id:1");
 		// Orion *lst    = dc_query(table, "LIST users");
 		// Orion *srt    = dc_query(table, "SORT users BY fname"); /// ??????????????????????
+
+
+
+void	expansionopen(query_t *tok, char *query, int *i)
+{
+	char *expopen = ft_substr(query, *i, 1);
+	tok->is_inside = true;
+	// printf("Op: |%s|\n", expopen);
+	append_node(&tok->tokens, expopen, EXPANSION_OPEN);
+	free(expopen);
+}
+
+void	expansionclose(query_t *tok, char *query, int *i)
+{
+	char *expclose = ft_substr(query, *i, 1);
+	tok->is_inside = false;
+	// printf("Cl: |%s|\n", expclose);
+	append_node(&tok->tokens, expclose, EXPANSION_CLOSE);
+	free(expclose);
+}
+
+void	addexpfield(query_t *tok, char *query, int *i)
+{
+	int expansion_len = 0;
+	int j = *i;
+
+	while (query[j] && query[j] != ',' && query[j] != '}')
+	{
+		j++;
+		expansion_len++;
+	}
+	char *expansion_field = ft_substr(query, *i, expansion_len);
+	// printf("Field: |%s|\n", expansion_field);
+	append_node(&tok->tokens, expansion_field, EXPANSION_FIELD);
+	free(expansion_field);
+	*i += expansion_len;
+}

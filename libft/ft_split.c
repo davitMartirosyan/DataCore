@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmartiro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmartiro <dmartiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 17:59:45 by dmartiro          #+#    #+#             */
-/*   Updated: 2022/04/04 18:09:33 by dmartiro         ###   ########.fr       */
+/*   Updated: 2024/05/19 16:58:20 by dmartiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	charcount(const char *c, int delimiter)
 	return (i);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c, int *size)
 {
 	int		i;
 	char	**split;
@@ -72,6 +72,7 @@ char	**ft_split(char const *s, char c)
 		s = start + end + s;
 		i++;
 	}
+	*size = wordcounter;
 	split[i] = 0;
 	return (split);
 }

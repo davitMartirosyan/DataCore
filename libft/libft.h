@@ -6,7 +6,7 @@
 /*   By: dmartiro <dmartiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:22:35 by dmartiro          #+#    #+#             */
-/*   Updated: 2024/05/18 16:30:00 by dmartiro         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:20:02 by dmartiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <math.h>
 # include "get_next_line.h"
 # define STRINGNPOS -1
+# define INVALID	-1
 typedef struct s_list
 {
 	void			*content;
@@ -50,7 +51,7 @@ char	*ft_strrchr(const char *buffer, int ch);
 char	*ft_strchr(const char *buffer, int ch);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_itoa(int n);
-char	**ft_split(char const *s, char c);
+char	**ft_split(char const *s, char c, int *size);
 char	* ft_lowercase(char * s);
 
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
