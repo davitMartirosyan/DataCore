@@ -163,3 +163,15 @@ void	addexpfield(query_t *tok, char *query, int *i)
 	free(expansion_field);
 	*i += expansion_len;
 }
+
+
+
+		for(int c = 0; c < size; c++)
+		{
+			char *tmp = ft_strtrim(fields[c], " \t\b\n\r\a");
+			append_node(&tok->tokens, tmp, EXPANSION_FIELD);
+			free(tmp);
+		}
+		for(int c = 0; c < size; c++)
+			free(fields[c]);
+		free(fields);

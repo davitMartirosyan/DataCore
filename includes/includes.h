@@ -63,6 +63,9 @@ void        append_node(querytok_t **tokens, char *word, type_t type);
 void        print_tokens(querytok_t *toks);
 
 
+//Garbage collector
+void		free_fields(char ***field);
+
 // void        create_node(querytok_t **tokens, char *word, type_t type);
 
 #endif

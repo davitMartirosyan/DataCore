@@ -54,6 +54,7 @@ query_t *lexer(char *query)
 	printf("expansions  : %d\n", tok->expansion_count);
 	printf("exp keys    : %d\n", tok->expansion_key_count);
 	printf("exp values  : %d\n", tok->expansion_value_count);
+	system("leaks datacore");
 	return(tok);
 }
 
@@ -74,20 +75,13 @@ int expansion(query_t *tok, char *query, int*i)
 		fields = ft_split(exp, ',', &size);
 		free(exp);
 		exp = NULL;
-		if (checkFields(fields, size) == INVALID)
-		{
-			printf("Invlaid fields\n");
-			return (-1);
-		}
-		else
-		{
-			if (tok->expansion_count == 0)
-			tok->expansion_key_count = size;
-			else
-				tok->expansion_value_count = size;
-			tok->expression_count++;
-			tok->expansion_count++;
-		}
+		//if (tok->expansion_count == 0)
+		//	tok->expansion_key_count = size;
+		//else
+		//	tok->expansion_value_count = size;
+
+		tok->expression_count++;
+		tok->expansion_count++;
 		*i += find + 2;
 		return (0);
 	}
@@ -96,7 +90,10 @@ int expansion(query_t *tok, char *query, int*i)
 
 int identify(query_t *tok, char *query, int *i)
 {
-	int j = *i + 1;
+	int j;
+
+	j = *i + 1;
+
 	return (0);
 }
 

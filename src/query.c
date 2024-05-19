@@ -22,7 +22,7 @@ Orion   *dc_query(table_t *table, char *query)
     query_t *q = lexer(query);
     if (q)
     {
-        // print_tokens(q->tokens);
+        print_tokens(q->tokens);
         free_tokens(&q);
         free(q);
         q = NULL;
