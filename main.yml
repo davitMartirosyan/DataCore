@@ -175,3 +175,62 @@ void	addexpfield(query_t *tok, char *query, int *i)
 		for(int c = 0; c < size; c++)
 			free(fields[c]);
 		free(fields);
+
+
+int expansion(query_t *tok, char *query, int*i)
+{
+	int j;
+	int find;
+	char *exp;
+	char *tmp;
+	char **fields;
+	int size;
+
+	j = *i + 1;
+	find = ft_find_first_of("}", query+j);
+	if (find != STRINGNPOS)
+	{
+		exp = ft_substr(query, j, find);
+		tmp = ft_strtrim(exp, " \t\b\a\r\n");
+		printf("expansion: [%s]\n", tmp);
+		append_node(&tok->tokens, tmp, EXPANSION_FIELD);
+		free(exp);
+		free(tmp);
+		tmp = NULL;
+		exp = NULL;
+		tok->expression_count++;
+		tok->expansion_count++;
+		tok->size++;
+		*i += find + 2;
+		return (0);
+	}
+	return (STRINGNPOS);
+}
+
+int identify(query_t *tok, char *query, int *i)
+{
+	int j;
+	int find;
+	char *ident;
+	char *tmp;
+
+	j = *i + 1;
+	find = ft_find_first_of(">", query+j);
+	if (find != STRINGNPOS)
+	{
+		ident = ft_substr(query, j, find);
+		tmp = ft_strtrim(ident, " \t\r\b\a\n");
+		printf("Identify: [%s]\n", tmp);
+		append_node(&tok->tokens, tmp, IDENTIFIER);
+		free(ident);
+		free(tmp);
+		ident = NULL;
+		tmp = NULL;
+		tok->expression_count++;
+		tok->ident_count++;
+		tok->size++;
+		*i += find + 2;
+		return (0);
+	}
+	return (STRINGNPOS);
+}

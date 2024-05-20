@@ -15,6 +15,7 @@ query_t *lexer(char *query)
 	tok->cap = 0;
 	tok->expression_count = 0;
 	tok->expansion_count = 0;
+	tok->ident_count = 0;
 	tok->tokens = NULL;
 
 	if (!tok)
@@ -28,14 +29,22 @@ query_t *lexer(char *query)
 		}
 		else if (query[i] && query[i] == '{')
 		{
-			if(expansion(tok, query, &i) != 0)
+			if(addExpansion(tok, query, &i, "}", EXPANSION_FIELD) != 0)
+			{
+				printf(EBADSYNTAX);
+				clean_space(&tok);
 				return (NULL);
+			}
 			continue;
 		}
 		else if (query[i] && query[i] == '<')
 		{
-			if (identify(tok, query, &i) != 0)
+			if (addExpansion(tok, query, &i, ">", IDENTIFIER) != 0)
+			{
+				printf(EBADSYNTAX);
+				clean_space(&tok);
 				return (NULL);
+			}
 			continue;
 		}
 		else if (query[i] && ft_isspace(query[i]))
@@ -45,56 +54,51 @@ query_t *lexer(char *query)
 		}
 		else
 		{
-			printf("Syntax error: unxepected identifier: |%c|\n", query[i]);
+			printf(EBADSYNTAX);
+			clean_space(&tok);
 			return (NULL);
 		}
 		i++;
 	}
-	printf("expressions : %d\n", tok->expression_count);
-	printf("expansions  : %d\n", tok->expansion_count);
-	printf("exp keys    : %d\n", tok->expansion_key_count);
-	printf("exp values  : %d\n", tok->expansion_value_count);
-	system("leaks datacore");
+	// printf("expressions : %d\n", tok->expression_count);
+	// printf("expansions  : %d\n", tok->expansion_count);
+	// printf("exp keys    : %d\n", tok->expansion_key_count);
+	// printf("exp values  : %d\n", tok->expansion_value_count);
+	// system("leaks datacore");
 	return(tok);
 }
 
-int expansion(query_t *tok, char *query, int*i)
+int addExpansion(query_t *tok, char *query, int *i, char *pattern, type_t type)
 {
 	int j;
 	int find;
-	char *exp;
-	char **fields;
-	int size;
+	char *ident;
+	char *tmp;
 
 	j = *i + 1;
-	find = ft_find_first_of("}", query+j);
+	find = ft_find_first_of(pattern, query+j);
 	if (find != STRINGNPOS)
 	{
-		exp = ft_substr(query, j, find);
-		printf("expansion: [%s]\n", exp);
-		fields = ft_split(exp, ',', &size);
-		free(exp);
-		exp = NULL;
-		//if (tok->expansion_count == 0)
-		//	tok->expansion_key_count = size;
-		//else
-		//	tok->expansion_value_count = size;
-
-		tok->expression_count++;
-		tok->expansion_count++;
-		*i += find + 2;
-		return (0);
+		ident = ft_substr(query, j, find);
+		tmp = ft_strtrim(ident, __SET__);
+		if(ft_find_first_of("{}[]\n\t\r\a\b", tmp) == STRINGNPOS)
+		{
+			printf("Expanssion: [%s]\n", tmp);
+			append_node(&tok->tokens, tmp, type);
+			free(tmp);
+			tok->expression_count++;
+			if(type == EXPANSION_FIELD)
+				tok->expansion_count++;
+			else if (type == IDENTIFIER)
+				tok->ident_count++;
+			tok->size++;
+			*i += find + 2;
+			return (0);
+		}
+		else {free(tmp); free(ident); return (1);}
+		
 	}
 	return (STRINGNPOS);
-}
-
-int identify(query_t *tok, char *query, int *i)
-{
-	int j;
-
-	j = *i + 1;
-
-	return (0);
 }
 
 void addword(query_t *tok, char *query, int *i)
@@ -108,12 +112,13 @@ void addword(query_t *tok, char *query, int *i)
 		wordlen++;
 	}
 	char *wd = ft_substr(query, *i, wordlen);
-	printf("Word: |%s|\n", wd);
-	append_node(&tok->tokens, wd, WORD);
+	printf("Word: [%s]\n", wd);
+	append_node(&tok->tokens, wd, (!tok->size) ? COMMAND : WORD);
 	free(wd);
 	wd = NULL;
-	*i += wordlen;
 	tok->expression_count++;
+	tok->size++;
+	*i += wordlen;
 }
 
 int checkFields(char **fields, int size)
@@ -154,6 +159,5 @@ int isValid(char *field)
 
 int validType(char *type)
 {
-
 	return (0);
 }

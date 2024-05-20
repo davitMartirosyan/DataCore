@@ -5,7 +5,10 @@
 #define __METADATA__ "./meta/"
 
 #define __DATABASE_FORMAT__ "%d:%d:%s:%s:%s\n"
-#define __SET__ " \n\t\r\b"
+#define __SET__ " \t\r\b\a\n"
+#define __REGEXP__ "{}[]\n\t\r\a\b"
+
+#define EBADSYNTAX "Syntax Error\n"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -47,17 +50,19 @@ void        __destruct(table_t **table);
 
 //tokenization
 query_t     *lexer(char *query);
-int         expansion(query_t *tok, char *query, int*i);
-int         identify(query_t *tok, char *query, int *i);
+int         addExpansion(query_t *tok, char *query, int *i, char *pattern, type_t type);
 void        addword(query_t *tok, char *query, int *i);
 int         checkFields(char **fields, int size);
 int         isValid(char *field);
 int         validType(char *type);
 
+// int         expansion(query_t *tok, char *query, int*i);
+// int         identify(query_t *tok, char *query, int *i);
 // void        expansionopen(query_t *tok, char *query, int *i);
 // void        expansionclose(query_t *tok, char *query, int *i);
 // void        addexpfield(query_t *tok, char *query, int *i);
 
+//dlist
 querytok_t  *create_node(char *word, type_t type);
 void        append_node(querytok_t **tokens, char *word, type_t type);
 void        print_tokens(querytok_t *toks);
@@ -65,7 +70,8 @@ void        print_tokens(querytok_t *toks);
 
 //Garbage collector
 void		free_fields(char ***field);
-
+void        free_tokens(query_t **qtok);
+void        clean_space(query_t **tok);
 // void        create_node(querytok_t **tokens, char *word, type_t type);
 
 #endif

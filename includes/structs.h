@@ -18,14 +18,13 @@ typedef void    (*fmap_t)(table_t *, char *);
 
 typedef enum type_t
 {
+    COMMAND,
     WORD,
-    SP,
-    EXPANSION_OPEN,
-    EXPANSION_CLOSE,
     EXPANSION_FIELD,
+    IDENTIFIER,
+    SP,
     COMMA,
     COLON,
-    IDENTIFIER,
 } type_t;
 
 typedef struct student_t
@@ -57,7 +56,7 @@ typedef struct query_t
     int size;
     int cap;
     int maxexp;
-    int id_count; //-> <identify>
+    int ident_count; //-> <identify>
     int expression_count; //-> WORD EXPANSION ... etc
     int expansion_count; // -> {}
     int expansion_key_count; // {keys} {}
