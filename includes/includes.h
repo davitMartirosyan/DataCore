@@ -8,7 +8,9 @@
 #define __SET__ " \t\r\b\a\n"
 #define __REGEXP__ "{}[]\n\t\r\a\b"
 
+#define FAILURE -1
 #define EBADSYNTAX "Syntax Error\n"
+#define FUNCTIONALITY 7
 
 #include <stdio.h>
 #include <unistd.h>
@@ -32,13 +34,13 @@
 Orion       *dc_query(table_t *table, char *query);
 
 //void
-void        dc_create(table_t *table, char *query);
-void        dc_add(table_t *table, char *query);
-void        dc_retrieve(table_t *table, char *query);
-void        dc_update(table_t *table, char *query);
-void        dc_delete(table_t *table, char *query);
-void        dc_list(table_t *table, char *query);
-void        dc_sort(table_t *table, char *query);
+f_ret        dc_create(table_t *table, query_t **query_list);
+f_ret        dc_add(table_t *table, query_t **query_list);
+f_ret        dc_retrieve(table_t *table, query_t **query_list);
+f_ret        dc_update(table_t *table, query_t **query_list);
+f_ret        dc_delete(table_t *table, query_t **query_list);
+f_ret        dc_list(table_t *table, query_t **query_list);
+f_ret        dc_sort(table_t *table, query_t **query_list);
 
 
 //table : utils
@@ -50,11 +52,9 @@ void        __destruct(table_t **table);
 
 //tokenization
 query_t     *lexer(char *query);
-int         addExpansion(query_t *tok, char *query, int *i, char *pattern, type_t type);
-void        addword(query_t *tok, char *query, int *i);
-int         checkFields(char **fields, int size);
-int         isValid(char *field);
-int         validType(char *type);
+int         add_expansion(query_t *tok, char *query, int *i, char *pattern, type_t type);
+void        add_word(query_t *tok, char *query, int *i);
+
 
 // int         expansion(query_t *tok, char *query, int*i);
 // int         identify(query_t *tok, char *query, int *i);
@@ -68,10 +68,19 @@ void        append_node(querytok_t **tokens, char *word, type_t type);
 void        print_tokens(querytok_t *toks);
 
 
+//parser
+fmap_t      find_command(table_t *table, query_t **query_list);
+int         parse_request(table_t *table, query_t **query_list);
+int         check_fields(char **fields, int size);
+int         is_valid(char *field);
+int         valid_type(char *type);
+
+
+
 //Garbage collector
 void		free_fields(char ***field);
 void        free_tokens(query_t **qtok);
 void        clean_space(query_t **tok);
-// void        create_node(querytok_t **tokens, char *word, type_t type);
+void        _init_query(void **initializer_list);
 
 #endif

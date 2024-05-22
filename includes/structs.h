@@ -5,6 +5,7 @@
 typedef struct	student_t       student_t;
 typedef struct	table_t         table_t;
 typedef int                     studid_t;
+typedef int                     f_ret;
 typedef struct  query_t         query_t;
 typedef struct  querytok_t      querytok_t;
 typedef struct  Orion           Orion;
@@ -13,7 +14,7 @@ typedef struct  int_t           int_t;
 typedef struct  meta_t          meta_t;
 typedef struct  stack           stack;
 
-typedef void    (*fmap_t)(table_t *, char *);
+typedef f_ret    (*fmap_t)(table_t *, query_t**);
 
 
 typedef enum type_t
@@ -49,6 +50,9 @@ typedef struct table_t
     
     fmap_t  fmap[7];
     char    *cmap[7];
+
+    char    *uname;
+    char    *pass;
 } table_t;
 
 typedef struct query_t
@@ -62,6 +66,7 @@ typedef struct query_t
     int expansion_key_count; // {keys} {}
     int expansion_value_count; // {} {values}
     bool is_inside;
+    char *cmd;
     querytok_t *tokens;
 }query_t;
 
@@ -85,6 +90,8 @@ typedef struct Orion
     int         int_type; // ?
     string_t    *s_type;
     int_t       *i_type;
+    Orion       *next;
+    Orion       *prev;
 } Orion;
 
 typedef struct string_t

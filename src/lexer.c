@@ -2,73 +2,65 @@
 
 int erno = 0;
 
-query_t *lexer(char *query)
+query_t *lexer(char *q)
 {
-	query_t     *tok = NULL;
-	int         len = ft_strlen(query);
+	query_t     *query = NULL;
+	int         len = ft_strlen(q);
 	int         actual = 0;
 	int			i = 0;
 
-	tok = malloc(sizeof(query_t));
-	tok->is_inside = false;
-	tok->size = 0;
-	tok->cap = 0;
-	tok->expression_count = 0;
-	tok->expansion_count = 0;
-	tok->ident_count = 0;
-	tok->tokens = NULL;
-
-	if (!tok)
+	query = malloc(sizeof(query_t));
+	if (!query)
 		return (NULL);
-	while (query && query[i])
+	_init_query((void*)&query);
+	while (q && q[i])
 	{
-		if (query[i] && ft_iswordpart(query[i]) && (int)ft_strlen(query) > i)
+		if (q[i] && ft_iswordpart(q[i]) && (int)ft_strlen(q) > i)
 		{
-			addword(tok, query, &i);
+			add_word(query, q, &i);
 			continue;
 		}
-		else if (query[i] && query[i] == '{')
+		else if (q[i] && q[i] == '{')
 		{
-			if(addExpansion(tok, query, &i, "}", EXPANSION_FIELD) != 0)
+			if(add_expansion(query, q, &i, "}", EXPANSION_FIELD) != 0)
 			{
+				//error log
 				printf(EBADSYNTAX);
-				clean_space(&tok);
+				clean_space(&query);
 				return (NULL);
 			}
 			continue;
 		}
-		else if (query[i] && query[i] == '<')
+		else if (q[i] && q[i] == '<')
 		{
-			if (addExpansion(tok, query, &i, ">", IDENTIFIER) != 0)
+			if (add_expansion(query, q, &i, ">", IDENTIFIER) != 0)
 			{
+        		//error log
 				printf(EBADSYNTAX);
-				clean_space(&tok);
+				clean_space(&query);
 				return (NULL);
 			}
 			continue;
 		}
-		else if (query[i] && ft_isspace(query[i]))
+		else if (q[i] && ft_isspace(q[i]))
 		{
 			i++; 
 			continue;
 		}
 		else
 		{
+			//error log
 			printf(EBADSYNTAX);
-			clean_space(&tok);
+			clean_space(&query);
 			return (NULL);
 		}
 		i++;
 	}
-	// printf("expressions : %d\n", tok->expression_count);
-	// printf("expansions  : %d\n", tok->expansion_count);
-	// printf("exp keys    : %d\n", tok->expansion_key_count);
-	// printf("exp values  : %d\n", tok->expansion_value_count);
-	// system("leaks datacore");
-	return(tok);
+	query->cmd = ft_lowercase(query->tokens->lexeme);
+	return(query);
 }
 
-int addExpansion(query_t *tok, char *query, int *i, char *pattern, type_t type)
+int add_expansion(query_t *tok, char *query, int *i, char *pattern, type_t type)
 {
 	int j;
 	int find;
@@ -83,7 +75,7 @@ int addExpansion(query_t *tok, char *query, int *i, char *pattern, type_t type)
 		tmp = ft_strtrim(ident, __SET__);
 		if(ft_find_first_of("{}[]\n\t\r\a\b", tmp) == STRINGNPOS)
 		{
-			printf("Expanssion: [%s]\n", tmp);
+			// printf("Expanssion: [%s]\n", tmp);
 			append_node(&tok->tokens, tmp, type);
 			free(tmp);
 			tok->expression_count++;
@@ -101,7 +93,7 @@ int addExpansion(query_t *tok, char *query, int *i, char *pattern, type_t type)
 	return (STRINGNPOS);
 }
 
-void addword(query_t *tok, char *query, int *i)
+void add_word(query_t *tok, char *query, int *i)
 {
 	int wordlen = 0;
 	int j = *i;
@@ -112,7 +104,7 @@ void addword(query_t *tok, char *query, int *i)
 		wordlen++;
 	}
 	char *wd = ft_substr(query, *i, wordlen);
-	printf("Word: [%s]\n", wd);
+	// printf("Word: [%s]\n", wd);
 	append_node(&tok->tokens, wd, (!tok->size) ? COMMAND : WORD);
 	free(wd);
 	wd = NULL;
@@ -121,43 +113,3 @@ void addword(query_t *tok, char *query, int *i)
 	*i += wordlen;
 }
 
-int checkFields(char **fields, int size)
-{
-	int i;
-
-	i = -1;
-	if (!fields)
-		return (INVALID);
-	while (fields[++i])
-	{
-		if (isValid(fields[i]) == INVALID)
-			return (INVALID);
-	}
-	return (0);
-}
-
-int isValid(char *field)
-{
-	int i;
-	int size;
-	char **pair;
-
-	i = -1;
-	pair = ft_split(field, ' ', &size);
-	if (size != 2)
-		return (INVALID);
-	if (ft_strcmp(pair[0], "char") == 0 || ft_strcmp(pair[0], "int") == 0)
-	{
-		while (pair[1][++i])
-			if (!ft_iswordpart(pair[1][i]))
-				return (INVALID);
-	}
-	else
-		return (INVALID);
-	return (0);
-}
-
-int validType(char *type)
-{
-	return (0);
-}

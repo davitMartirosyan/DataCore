@@ -28,7 +28,6 @@ void    free_tokens(query_t **qtok)
 {
     querytok_t *current = ((*qtok)->tokens);
     querytok_t *next_node = NULL;
-
     while (current != NULL)
     {
         next_node = current->next;
@@ -36,4 +35,16 @@ void    free_tokens(query_t **qtok)
         free(current);        // Free the node itself
         current = next_node;
     }
+}
+
+void _init_query(void **initializer_list)
+{
+	((query_t*)(*initializer_list))->is_inside = false;
+	((query_t*)(*initializer_list))->size = 25;
+	((query_t*)(*initializer_list))->cap = 0;
+	((query_t*)(*initializer_list))->expression_count = 0;
+	((query_t*)(*initializer_list))->expansion_count = 0;
+	((query_t*)(*initializer_list))->ident_count = 0;
+	((query_t*)(*initializer_list))->cmd = NULL;
+	((query_t*)(*initializer_list))->tokens = NULL;
 }

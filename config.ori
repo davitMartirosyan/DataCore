@@ -1,0 +1,5 @@
+DB{
+    username: dmartiro;
+    password: dmartiro123;
+    def_table: users;
+}
