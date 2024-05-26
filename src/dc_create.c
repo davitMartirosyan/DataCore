@@ -5,6 +5,7 @@ f_ret	dc_create(table_t *table, query_t **query_list)
 	querytok_t *expand = NULL;
 	querytok_t *table_name = NULL;
 	char **expansion_lexemes = NULL;
+	char *meta = NULL;
 	int size = 0;
 
 	if ((*query_list)->expression_count != 3 || (*query_list)->expansion_count != 1)

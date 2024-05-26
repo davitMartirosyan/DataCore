@@ -3,17 +3,14 @@
 char * ft_lowercase(char * s)
 {
     char *new;
-    int i = 0;
+    int i = -1;
     if (!s)
         return (NULL);
-    new = malloc(sizeof(char) * ((int)ft_strlen(s)));
-    strcpy(new, s);
+    new = malloc(sizeof(char) * ((int)ft_strlen(s) + 1));
     if (!new)
         return (NULL);
-    while(new[i])
-    {
-        new[i] = tolower((unsigned char)new[i]);
-        i++;
-    }
+    while(new[++i])
+        new[i] = tolower((unsigned char)s[i]);
+    new[i] = '\0';
     return (new);
 }
