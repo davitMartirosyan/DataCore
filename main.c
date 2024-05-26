@@ -11,6 +11,7 @@ int main(int ac, char **av, char **envp)
 	{
 		char *q = readline("$Orion: ");
 		Orion *query = dc_query(table, q);
+		printf("%d\n", query->i_type->val);
 		free(q);
 	}
 
@@ -19,3 +20,6 @@ int main(int ac, char **av, char **envp)
 	// Orion* q2 = dc_query(table, "UPDATE users {fname, lname} {Davit, Martirosyan} of <id:1>");
 	dc_cleanup(&table);
 }
+
+
+

@@ -16,6 +16,8 @@ int dc_add_fields(char **fields, int size)
             free_fields(column);
             return (0);
         }
+		printf("%s : %s\n", column[0], column[1]);
+			
         free_fields(column);
         column = NULL;
         i++;

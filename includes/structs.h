@@ -104,7 +104,7 @@ typedef struct string_t
 typedef struct int_t
 {
     char        *column;
-    char        *val;
+    int         val;
     int_t       *next;
 }int_t;
 
@@ -113,6 +113,5 @@ typedef struct stack
     int top;
     
 } stack;
-
 
 #endif
