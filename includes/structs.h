@@ -90,8 +90,8 @@ typedef struct Orion
     int         int_type; // ?
     string_t    *s_type;
     int_t       *i_type;
-    Orion       *next;
-    Orion       *prev;
+    void        *next;
+    void        *prev;
 } Orion;
 
 typedef struct string_t

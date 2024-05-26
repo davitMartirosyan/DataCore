@@ -10,11 +10,12 @@ int main(int ac, char **av, char **envp)
 	while (1)
 	{
 		char *q = readline("$Orion: ");
+		if (!q)
+			break;
 		Orion *query = dc_query(table, q);
-		printf("%d\n", query->i_type->val);
 		free(q);
 	}
-
+	// char *res = result("fname", (string_t*)query->s_type);
 	// Orion* q1 = dc_query(table, "CREATE users {     char fname char lname } >");
 	// Orion* q2 = dc_query(table, "UPDATE users {fname, lname} {Davit, Martirosyan}");
 	// Orion* q2 = dc_query(table, "UPDATE users {fname, lname} {Davit, Martirosyan} of <id:1>");

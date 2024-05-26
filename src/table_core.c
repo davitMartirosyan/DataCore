@@ -1,9 +1,7 @@
 #include "includes.h"
 
-int dc_add_fields(char **fields, int size)
+int dc_columns(char **fields, int size)
 {
-    char *column_type = NULL;
-    char *column_name = NULL;
     char **column = NULL;
     int sz = 0;
     int i = 0;
@@ -11,13 +9,12 @@ int dc_add_fields(char **fields, int size)
     while (fields[i])
     {
         column = ft_split(fields[i], ' ', &sz);
-        if (dc_field(column, sz) == INVALID)
+        if (dc_column_type(column, sz) == INVALID)
         {
             free_fields(column);
-            return (0);
+            return (INVALID);
         }
-		printf("%s : %s\n", column[0], column[1]);
-			
+		// printf("%s : %s\n", column[0], column[1]);
         free_fields(column);
         column = NULL;
         i++;
@@ -25,7 +22,7 @@ int dc_add_fields(char **fields, int size)
     return (1);
 }
 
-int dc_field(char **col, int size)
+int dc_column_type(char **col, int size)
 {
 	if (!col)
 		return (INVALID);

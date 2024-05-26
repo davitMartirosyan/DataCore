@@ -25,6 +25,8 @@ void clean_space(query_t **tok)
 	(*tok)->expansion_value_count = 0;
 	(*tok)->is_inside = false;
 	free_tokens(tok);
+	free(*tok);
+	*tok = NULL;
 }
 
 void    free_tokens(query_t **qtok)

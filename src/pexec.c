@@ -1,6 +1,6 @@
 #include "includes.h"
 
-int parse_request(table_t *table, query_t **query_list)
+int pexec(table_t *table, query_t **query_list)
 {
     fmap_t cmd = find_command(table, query_list);
     if (!cmd)

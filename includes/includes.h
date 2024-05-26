@@ -24,6 +24,8 @@
 #include <signal.h>
 #include <fcntl.h>
 #include <sys/types.h>
+#include <dirent.h>
+#include <time.h>
 #include <readline/readline.h>
 #include "./structs.h"
 #include "../libft/libft.h"
@@ -69,14 +71,12 @@ void        print_tokens(querytok_t *toks);
 
 
 //parser
+querytok_t	*find(querytok_t *qlist, type_t type);
 fmap_t      find_command(table_t *table, query_t **query_list);
-int         parse_request(table_t *table, query_t **query_list);
-int         check_fields(char **fields, int size);
-int         is_valid(char *field);
-int         valid_type(char *type);
+int         pexec(table_t *table, query_t **query_list);
 
-int         dc_field(char **col, int size);
-int         dc_add_fields(char **fields, int size);
+int         dc_columns(char **fields, int size);
+int         dc_column_type(char **col, int size);
 
 
 //Garbage collector
