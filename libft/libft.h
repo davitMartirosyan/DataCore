@@ -6,7 +6,7 @@
 /*   By: dmartiro <dmartiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:22:35 by dmartiro          #+#    #+#             */
-/*   Updated: 2024/05/19 17:20:02 by dmartiro         ###   ########.fr       */
+/*   Updated: 2024/05/26 15:46:13 by dmartiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include <string.h>
+# include <ctype.h>
 # include <math.h>
 # include "get_next_line.h"
 # define STRINGNPOS -1
 # define INVALID	-1
+# define VALID		0
 typedef struct s_list
 {
 	void			*content;

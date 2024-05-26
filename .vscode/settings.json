@@ -1,6 +1,9 @@
 {
     "files.associations": {
         "*.bem": "cuda-cpp",
-        "includes.h": "c"
+        "includes.h": "c",
+        "__locale": "c",
+        "cctype": "c",
+        "locale": "c"
     }
 }

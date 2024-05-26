@@ -75,10 +75,12 @@ int         check_fields(char **fields, int size);
 int         is_valid(char *field);
 int         valid_type(char *type);
 
+int         dc_field(char **col, int size);
+int         dc_add_fields(char **fields, int size);
 
 
 //Garbage collector
-void		free_fields(char ***field);
+void		free_fields(char **field);
 void        free_tokens(query_t **qtok);
 void        clean_space(query_t **tok);
 void        _init_query(void **initializer_list);

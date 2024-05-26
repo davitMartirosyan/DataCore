@@ -56,7 +56,6 @@ query_t *lexer(char *q)
 		}
 		i++;
 	}
-	query->cmd = ft_lowercase(query->tokens->lexeme);
 	return(query);
 }
 
@@ -78,6 +77,7 @@ int add_expansion(query_t *tok, char *query, int *i, char *pattern, type_t type)
 			// printf("Expanssion: [%s]\n", tmp);
 			append_node(&tok->tokens, tmp, type);
 			free(tmp);
+			free(ident);
 			tok->expression_count++;
 			if(type == EXPANSION_FIELD)
 				tok->expansion_count++;

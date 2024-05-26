@@ -1,13 +1,16 @@
 #include "includes.h"
 
-void free_fields(char ***fields)
+void free_fields(char **fields)
 {
-	char **field_buffer = *fields;
-	int i = 0;
-	while (field_buffer[i])
-		free(field_buffer[i]);
-	free(*fields);
-	*fields = NULL;
+	int	i;
+
+	i = 0;
+	while (fields[i])
+	{
+		free(fields[i]);
+		i++;
+	}
+	free(fields);
 }
 
 void clean_space(query_t **tok)
@@ -40,7 +43,7 @@ void    free_tokens(query_t **qtok)
 void _init_query(void **initializer_list)
 {
 	((query_t*)(*initializer_list))->is_inside = false;
-	((query_t*)(*initializer_list))->size = 25;
+	((query_t*)(*initializer_list))->size = 0;
 	((query_t*)(*initializer_list))->cap = 0;
 	((query_t*)(*initializer_list))->expression_count = 0;
 	((query_t*)(*initializer_list))->expansion_count = 0;

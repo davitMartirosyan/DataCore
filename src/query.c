@@ -10,10 +10,12 @@ Orion   *dc_query(table_t *table, char *query)
     q = lexer(query);
     if (!q)
         return (NULL);
-    if (!parse_request(table, &q) < 0)
-    {
+    if (parse_request(table, &q) == INVALID)
+	{
+		printf("invalid query\n");
         clean_space(&q);
         return (NULL);
     }
+	clean_space(&q);
     return (result);
 }

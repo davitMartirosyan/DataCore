@@ -7,14 +7,12 @@ char * ft_lowercase(char * s)
     if (!s)
         return (NULL);
     new = malloc(sizeof(char) * ((int)ft_strlen(s)));
+    strcpy(new, s);
     if (!new)
         return (NULL);
-    while(s[i])
+    while(new[i])
     {
-        if (s[i] >= 65 && s[i] <= 90)
-            new[i] = s[i] + 32;
-        else
-            new[i] = s[i];
+        new[i] = tolower((unsigned char)new[i]);
         i++;
     }
     return (new);
