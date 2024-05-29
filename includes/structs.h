@@ -40,19 +40,16 @@ typedef struct student_t
 
 typedef struct table_t
 {
-    int     fd;
-    char*   dbase_name;
-    FILE*   dbase;
-
-    char*   meta_dbase_name;
     FILE*   meta_dbase;
+    FILE*   dbase;
+    char*   dbase_name;
+    char*   meta_dbase_name;
     meta_t  **metainfo;
-    
     fmap_t  fmap[7];
     char    *cmap[7];
-
     char    *uname;
     char    *pass;
+    int     fd;
 } table_t;
 
 typedef struct query_t
@@ -67,6 +64,7 @@ typedef struct query_t
     int expansion_value_count; // {} {values}
     bool is_inside;
     char *cmd;
+    char *cols;
     querytok_t *tokens;
 }query_t;
 

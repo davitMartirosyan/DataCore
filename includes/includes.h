@@ -75,10 +75,10 @@ querytok_t	*find(querytok_t *qlist, type_t type);
 fmap_t      find_command(table_t *table, query_t **query_list);
 int         pexec(table_t *table, query_t **query_list);
 
-int         dc_columns(char **fields, int size);
+int         dc_columns(query_t **query_list, char **fields, int size);
 int         dc_column_type(char **col, int size);
 char        *column_join(char * s1, char * s2);
-char	    *join_arguments(char *s1, int ident, char *s2, int delim);
+char	    *join_arguments(char *s1, char ident, char *s2, char delim);
 
 
 //Garbage collector

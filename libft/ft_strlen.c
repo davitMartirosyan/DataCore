@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmartiro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmartiro <dmartiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 20:11:42 by dmartiro          #+#    #+#             */
-/*   Updated: 2022/04/04 18:11:31 by dmartiro         ###   ########.fr       */
+/*   Updated: 2024/05/29 22:48:12 by dmartiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlen(const char *c)
 	size_t	i;
 
 	i = 0;
+	if (!c)
+		return (0);
 	while (c[i] != '\0')
 		i++;
 	return (i);

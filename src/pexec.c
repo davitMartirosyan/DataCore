@@ -4,7 +4,7 @@ int pexec(table_t *table, query_t **query_list)
 {
     fmap_t cmd = find_command(table, query_list);
     if (!cmd)
-        return (-1);
+        return (-1);    
     return (cmd(table, query_list));
 }
 

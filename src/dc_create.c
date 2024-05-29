@@ -13,15 +13,17 @@ f_ret	dc_create(table_t *table, query_t **query_list)
 	expand = find((*query_list)->tokens, EXPANSION_FIELD);
 	table_name = find((*query_list)->tokens, WORD);
 	expansion_lexemes = ft_split(expand->lexeme, ',', &size);
-	printf("<%s>\n", table_name->lexeme);
-	if (dc_columns(expansion_lexemes, size) < 0)
+	if (dc_columns(query_list, expansion_lexemes, size) < 0)
 	{
 		free_fields(expansion_lexemes);
 		return (INVALID);
 	}
+	printf("::%s::\n", (*query_list)->cols);
 	free_fields(expansion_lexemes);
 	return (0);
 }
+
+
 
 querytok_t *find(querytok_t *qlist, type_t type)
 {

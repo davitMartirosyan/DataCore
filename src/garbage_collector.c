@@ -52,4 +52,5 @@ void _init_query(void **initializer_list)
 	((query_t*)(*initializer_list))->ident_count = 0;
 	((query_t*)(*initializer_list))->cmd = NULL;
 	((query_t*)(*initializer_list))->tokens = NULL;
+	((query_t*)(*initializer_list))->cols = NULL;
 }
