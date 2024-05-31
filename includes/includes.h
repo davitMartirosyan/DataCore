@@ -1,7 +1,7 @@
 #ifndef INCLUDES_H
 #define INCLUDES_H
 
-#define __DATABASE__ "./db/db.sql"
+#define __DATABASE__ "./db/"
 #define __METADATA__ "./meta/"
 
 #define __DATABASE_FORMAT__ "%d:%d:%s:%s:%s\n"
@@ -24,6 +24,7 @@
 #include <signal.h>
 #include <fcntl.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <dirent.h>
 #include <time.h>
 #include <readline/readline.h>
@@ -52,9 +53,15 @@ void        __construct(table_t **table);
 void        __destruct(table_t **table);
 
 
+//files : core utils
+file_t      dc_create_file(table_t *table, char *relative, char *filename, char *ext, mode_t mod);
+char        *relative_path(char * s1, char * s2, char * s3);
+int         mkdir_p(const char *path);
+
+
 //tokenization
 query_t     *lexer(char *query);
-int         add_expansion(query_t *tok, char *query, int *i, char *pattern, type_t type);
+int         split_expansion(query_t *tok, char *query, int *i, char *pattern, type_t type);
 void        add_word(query_t *tok, char *query, int *i);
 
 
@@ -77,7 +84,7 @@ int         pexec(table_t *table, query_t **query_list);
 
 int         dc_columns(query_t **query_list, char **fields, int size);
 int         dc_column_type(char **col, int size);
-char        *column_join(char * s1, char * s2);
+char        *concat(char * s1, char * s2);
 char	    *join_arguments(char *s1, char ident, char *s2, char delim);
 
 

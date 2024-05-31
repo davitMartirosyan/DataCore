@@ -29,13 +29,16 @@ remove:
 	@rm -rf $(DB)/*
 	@rm -rf $(META)/*
 
-fclean: clean
+fclean: clean cleanMeta
 	@rm -rf $(NAME)
 
 clean:
 	@rm -rf $(OBJ)
 
 re: fclean all
+
+cleanMeta:
+	@rm -rf $(META)/*
 
 git:
 	@echo "Enter Commit: "

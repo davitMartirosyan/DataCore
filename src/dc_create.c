@@ -18,11 +18,11 @@ f_ret	dc_create(table_t *table, query_t **query_list)
 		free_fields(expansion_lexemes);
 		return (INVALID);
 	}
-	printf("::%s::\n", (*query_list)->cols);
+	dc_create_file(table, __METADATA__, table_name->lexeme, ".meta", 0644);
+
 	free_fields(expansion_lexemes);
 	return (0);
 }
-
 
 
 querytok_t *find(querytok_t *qlist, type_t type)

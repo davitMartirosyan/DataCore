@@ -1,3 +1,0 @@
-users={[int:id];[char:fname];[char:lname];[int:age]}
-
-users{int:id;char:fname;char:lname}

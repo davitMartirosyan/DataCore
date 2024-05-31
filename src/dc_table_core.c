@@ -16,10 +16,11 @@ int dc_columns(query_t **query_list, char **fields, int size)
             return (INVALID);
         }
         join = join_arguments(column[0], ':', column[1], ';');
-        (*query_list)->cols = column_join((*query_list)->cols, join);
+        (*query_list)->cols = concat((*query_list)->cols, join);
         free(join);
         free_fields(column);
         column = NULL;
+        join = NULL;
         i++;
     }
     return (1);
@@ -41,7 +42,7 @@ int dc_column_type(char **col, int size)
 	return (INVALID);
 }
 
-char	*column_join(char * s1, char * s2)
+char	*concat(char * s1, char * s2)
 {
 	char	*arguments = NULL;
 	int		i = -1;

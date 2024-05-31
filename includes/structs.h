@@ -13,6 +13,7 @@ typedef struct  string_t        string_t;
 typedef struct  int_t           int_t;
 typedef struct  meta_t          meta_t;
 typedef struct  stack           stack;
+typedef int                     file_t;
 
 typedef f_ret    (*fmap_t)(table_t *, query_t**);
 

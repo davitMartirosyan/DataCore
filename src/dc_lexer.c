@@ -22,7 +22,7 @@ query_t *lexer(char *q)
 		}
 		else if (q[i] && q[i] == '{')
 		{
-			if(add_expansion(query, q, &i, "}", EXPANSION_FIELD) != 0)
+			if(split_expansion(query, q, &i, "}", EXPANSION_FIELD) != 0)
 			{
 				//error log
 				printf(EBADSYNTAX);
@@ -33,7 +33,7 @@ query_t *lexer(char *q)
 		}
 		else if (q[i] && q[i] == '<')
 		{
-			if (add_expansion(query, q, &i, ">", IDENTIFIER) != 0)
+			if (split_expansion(query, q, &i, ">", IDENTIFIER) != 0)
 			{
         		//error log
 				printf(EBADSYNTAX);
@@ -59,7 +59,7 @@ query_t *lexer(char *q)
 	return(query);
 }
 
-int add_expansion(query_t *tok, char *query, int *i, char *pattern, type_t type)
+int split_expansion(query_t *tok, char *query, int *i, char *pattern, type_t type)
 {
 	int j;
 	int find;
