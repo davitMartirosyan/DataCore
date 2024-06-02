@@ -56,7 +56,7 @@ void        __destruct(table_t **table);
 //files : core utils
 file_t      dc_create_file(table_t *table, char *relative, char *filename, char *ext, mode_t mod);
 char        *relative_path(char * s1, char * s2, char * s3);
-int         mkdir_p(const char *path);
+int         mkdir_p(const char *path, mode_t mod);
 
 
 //tokenization
@@ -84,8 +84,11 @@ int         pexec(table_t *table, query_t **query_list);
 
 int         dc_columns(query_t **query_list, char **fields, int size);
 int         dc_column_type(char **col, int size);
+
+//string manipulation
 char        *concat(char * s1, char * s2);
-char	    *join_arguments(char *s1, char ident, char *s2, char delim);
+char	    *convcat(char *s1, char ident, char *s2, char delim);
+char	    *conlcat(char *s1, char ident, char *s2);
 
 
 //Garbage collector

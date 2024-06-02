@@ -3,23 +3,24 @@
 file_t dc_create_file(table_t *table, char *relative, char *filename, char *ext, mode_t mod)
 {
     struct stat st;
+    file_t fio = 0;
+    file_t fret = 0;
     char *file = NULL;
-    int f = 0;
 
-    if (stat(relative, &st) == 0)
+    if (stat(relative, &st) != 0)
     {
-        //exists
-        if (S_ISDIR(st.st_mode))
-            printf("is directory\n");
+        fret = mkdir_p(relative, 0755);
         file = relative_path(relative, filename, ext);
-        mkdir_p(relative);
-        free(file);
+        fio = open("./meta/users.meta", O_CREAT|O_RDWR|O_APPEND, mod);
     }
     else
     {
-
+        file = relative_path(relative, filename, ext);
+        fio = open(file, O_CREAT|O_RDWR|O_APPEND, mod);
     }
-    return (0);
+    free(file);
+    close(fio);
+    return (fret);
 }
 
 char	*relative_path(char * s1, char * s2, char * s3)
@@ -50,12 +51,20 @@ char	*relative_path(char * s1, char * s2, char * s3)
 	return (arguments);
 }
 
-int mkdir_p(const char *path)
+int mkdir_p(const char *path, mode_t mod)
 {
-    char tmp[256];
-    char *p = NULL;
-    size_t len;
-
-    snprintf(tmp, sizeof(tmp), "%s", path);
-    return (0);
+    int sz = 0;
+    char **recursive = ft_split(path, '/', &sz);
+    int i = -1;
+    char *r_path = NULL;
+    int fret = 0;
+    while (recursive[++i] && fret >= 0)
+    {
+        r_path = conlcat(r_path, '/', recursive[i]);
+        if (mkdir(r_path, mod) < 0 && errno != EEXIST)
+            fret = -1;
+    }
+    free(r_path);
+    free_fields(recursive);
+    return (fret);
 }

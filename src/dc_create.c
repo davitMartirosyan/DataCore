@@ -4,6 +4,7 @@ f_ret	dc_create(table_t *table, query_t **query_list)
 {
 	querytok_t *expand = NULL;
 	querytok_t *table_name = NULL;
+	f_ret ret_val = 0;
 	char **expansion_lexemes = NULL;
 	char *meta = NULL;
 	int size = 0;
@@ -14,14 +15,11 @@ f_ret	dc_create(table_t *table, query_t **query_list)
 	table_name = find((*query_list)->tokens, WORD);
 	expansion_lexemes = ft_split(expand->lexeme, ',', &size);
 	if (dc_columns(query_list, expansion_lexemes, size) < 0)
-	{
-		free_fields(expansion_lexemes);
-		return (INVALID);
-	}
-	dc_create_file(table, __METADATA__, table_name->lexeme, ".meta", 0644);
-
+		ret_val = INVALID;
+	if (dc_create_file(table, __METADATA__, table_name->lexeme, ".meta", 0644) < 0)
+		ret_val = INVALID;
 	free_fields(expansion_lexemes);
-	return (0);
+	return (ret_val);
 }
 
 

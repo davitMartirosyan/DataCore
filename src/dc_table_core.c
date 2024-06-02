@@ -15,7 +15,7 @@ int dc_columns(query_t **query_list, char **fields, int size)
             free_fields(column);
             return (INVALID);
         }
-        join = join_arguments(column[0], ':', column[1], ';');
+        join = convcat(column[0], ':', column[1], ';');
         (*query_list)->cols = concat((*query_list)->cols, join);
         free(join);
         free_fields(column);
@@ -68,7 +68,7 @@ char	*concat(char * s1, char * s2)
 	return (arguments);
 }
 
-char	*join_arguments(char *s1, char ident, char *s2, char delim)
+char	*convcat(char *s1, char ident, char *s2, char delim)
 {
 	char	*arguments;
 	int		i;
@@ -92,5 +92,33 @@ char	*join_arguments(char *s1, char ident, char *s2, char delim)
 		arguments[i++] = s2[c];
     arguments[i++] = delim;
 	arguments[i] = '\0';
+	return (arguments);
+}
+
+char	*conlcat(char *s1, char ident, char *s2)
+{
+	char	*arguments;
+	int		i;
+	int		c;
+
+	if (!s1 && !s2)
+		return (ft_strdup(""));
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	arguments = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
+	if (!arguments)
+		return (NULL);
+	i = -1;
+	c = -1;
+	while (s1[++i])
+		arguments[i] = s1[i];
+	arguments[i++] = ident;
+	while (s2[++c])
+		arguments[i++] = s2[c];
+	arguments[i] = '\0';
+    free(s1);
+    s1 = NULL;
 	return (arguments);
 }
