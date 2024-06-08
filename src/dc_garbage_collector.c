@@ -1,5 +1,5 @@
 #include "includes.h"
-
+extern int dc_errno;
 void free_fields(char **fields)
 {
 	int	i;
@@ -26,8 +26,10 @@ void clean_space(query_t **tok)
 	(*tok)->is_inside = false;
 	free_tokens(tok);
 	free(*tok);
+	dc_errno = 0;
 	*tok = NULL;
 }
+
 
 void    free_tokens(query_t **qtok)
 {
@@ -42,15 +44,19 @@ void    free_tokens(query_t **qtok)
     }
 }
 
-void _init_query(void **initializer_list)
+void dc_cleanup(table_t **table)
 {
-	((query_t*)(*initializer_list))->is_inside = false;
-	((query_t*)(*initializer_list))->size = 0;
-	((query_t*)(*initializer_list))->cap = 0;
-	((query_t*)(*initializer_list))->expression_count = 0;
-	((query_t*)(*initializer_list))->expansion_count = 0;
-	((query_t*)(*initializer_list))->ident_count = 0;
-	((query_t*)(*initializer_list))->cmd = NULL;
-	((query_t*)(*initializer_list))->tokens = NULL;
-	((query_t*)(*initializer_list))->cols = NULL;
+    if (!*table)
+        return ;
+    // fclose(table->db);
+    // close(table->fd);
+    free((*table)->dbase_name);
+    free((*table)->meta_dbase_name);
+    free((*table)->metainfo); 
+    __destruct(table);
+}
+
+void _dealloc(garbage_collector_t *space)
+{
+	free_fields(space->list);
 }

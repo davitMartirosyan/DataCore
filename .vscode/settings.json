@@ -6,6 +6,8 @@
         "cctype": "c",
         "locale": "c",
         "ctime": "cpp",
-        "dirent.h": "c"
+        "dirent.h": "c",
+        "libft.h": "c",
+        "dc_errno.h": "c"
     }
 }

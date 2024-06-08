@@ -1,5 +1,5 @@
 #include "includes.h"
-
+extern int dc_errno;
 file_t dc_create_file(table_t *table, char *relative, char *filename, char *ext, mode_t mod)
 {
     struct stat st;
@@ -11,12 +11,14 @@ file_t dc_create_file(table_t *table, char *relative, char *filename, char *ext,
     {
         fret = mkdir_p(relative, 0755);
         file = relative_path(relative, filename, ext);
-        fio = open("./meta/users.meta", O_CREAT|O_RDWR|O_APPEND, mod);
+        if ((fio = open(file, O_CREAT|O_RDWR|O_APPEND, mod)) < 0)
+            dc_errno |= PERM;
     }
     else
     {
         file = relative_path(relative, filename, ext);
-        fio = open(file, O_CREAT|O_RDWR|O_APPEND, mod);
+        if((fio = open(file, O_CREAT|O_RDWR|O_APPEND|O_EXCL, mod)) < 0)
+            dc_errno |= EXIST;
     }
     free(file);
     close(fio);

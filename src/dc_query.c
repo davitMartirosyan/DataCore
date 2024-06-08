@@ -7,17 +7,14 @@ Orion   *dc_query(table_t *table, char *query)
     Orion   *result = NULL;
     if (!query)
         return (NULL);
-    q = lexer(query);
-    if (!q)
+    if (!(q = lexer(query)))
         return (NULL);
-    // print_tokens(q->tokens);
     if (pexec(table, &q) == INVALID)
 	{
 		printf("invalid query\n");
         clean_space(&q);
         return (NULL);
     }
-	clean_space(&q);
-    // system("leaks datacore");
+	// clean_space(&q);
     return (result);
 }

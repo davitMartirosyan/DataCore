@@ -1,5 +1,5 @@
 #include "includes.h"
-
+extern int dc_errno;
 int dc_columns(query_t **query_list, char **fields, int size)
 {
     char **column = NULL;
@@ -12,6 +12,7 @@ int dc_columns(query_t **query_list, char **fields, int size)
         column = ft_split(fields[i], ' ', &sz);
         if (dc_column_type(column, sz) == INVALID)
         {
+			dc_errno |= SYNTAX;
             free_fields(column);
             return (INVALID);
         }

@@ -1,5 +1,5 @@
 #include "includes.h"
-
+extern int dc_errno;
 f_ret	dc_create(table_t *table, query_t **query_list)
 {
 	querytok_t *expand = NULL;
@@ -17,7 +17,16 @@ f_ret	dc_create(table_t *table, query_t **query_list)
 	if (dc_columns(query_list, expansion_lexemes, size) < 0)
 		ret_val = INVALID;
 	if (dc_create_file(table, __METADATA__, table_name->lexeme, ".meta", 0644) < 0)
+	{
+		printf("mta1\n");
 		ret_val = INVALID;
+	}
+	if (dc_create_file(table, __DATABASE__, table_name->lexeme, ".orion", 0644) < 0)
+	{
+		printf("mta2\n");
+		ret_val = INVALID;
+	}
+	printf("%d\n", ret_val);
 	free_fields(expansion_lexemes);
 	return (ret_val);
 }

@@ -2,18 +2,19 @@
 #define STRUCTS_H
 #include "includes.h"
 
-typedef struct	student_t       student_t;
-typedef struct	table_t         table_t;
-typedef int                     studid_t;
-typedef int                     f_ret;
-typedef struct  query_t         query_t;
-typedef struct  querytok_t      querytok_t;
-typedef struct  Orion           Orion;
-typedef struct  string_t        string_t;
-typedef struct  int_t           int_t;
-typedef struct  meta_t          meta_t;
-typedef struct  stack           stack;
-typedef int                     file_t;
+typedef struct	student_t           student_t;
+typedef struct	table_t             table_t;
+typedef int                         studid_t;
+typedef int                         f_ret;
+typedef struct  query_t             query_t;
+typedef struct  querytok_t          querytok_t;
+typedef struct  Orion               Orion;
+typedef struct  string_t            string_t;
+typedef struct  int_t               int_t;
+typedef struct  meta_t              meta_t;
+typedef struct  stack               stack;
+typedef int                         file_t;
+typedef struct garbage_collector_t  garbage_collector_t;
 
 typedef f_ret    (*fmap_t)(table_t *, query_t**);
 
@@ -106,6 +107,13 @@ typedef struct int_t
     int         val;
     int_t       *next;
 }int_t;
+
+typedef struct garbage_collector_t
+{
+    char **list;
+    query_t **query_list;
+} garbage_collector_t;
+
 
 typedef struct stack
 {

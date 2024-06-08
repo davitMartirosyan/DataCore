@@ -6,7 +6,7 @@
 
 #define __DATABASE_FORMAT__ "%d:%d:%s:%s:%s\n"
 #define __SET__ " \t\r\b\a\n"
-#define __REGEXP__ "{}[]\n\t\r\a\b"
+#define __REGEXP__ "{}[]\\\n\t\r\a\b"
 
 #define FAILURE -1
 #define EBADSYNTAX "Syntax Error\n"
@@ -30,8 +30,9 @@
 #include <readline/readline.h>
 #include "./structs.h"
 #include "../libft/libft.h"
+#include "dc_errno.h"
 
-//CRUDLS - > Create - Retrieve - Update - Delete - List - Sort
+//CARUDLS -> Create - Add - Retrieve - Update - Delete - List - Sort
 
 //Orion
 Orion       *dc_query(table_t *table, char *query);
@@ -96,5 +97,6 @@ void		free_fields(char **field);
 void        free_tokens(query_t **qtok);
 void        clean_space(query_t **tok);
 void        _init_query(void **initializer_list);
+void        _dealloc(garbage_collector_t *space);
 
 #endif

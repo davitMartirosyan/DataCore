@@ -14,20 +14,9 @@ table_t *dc_init(char *db)
     return (table);
 }
 
-void dc_cleanup(table_t **table)
-{
-    if (!*table)
-        return ;
-    // fclose(table->db);
-    // close(table->fd);
-    free((*table)->dbase_name);
-    free((*table)->meta_dbase_name);
-    free((*table)->metainfo); 
-    __destruct(table);
-}
 
 
-void     __construct(table_t **table)
+void __construct(table_t **table)
 {
     (*table)->fd = -1;                      // file descriptor
     (*table)->dbase = NULL;                 // FILE
@@ -62,4 +51,17 @@ void __destruct(table_t **table)
     (*table)->meta_dbase_name = NULL;
     (*table)->metainfo = NULL;
     free(*table);
+}
+
+void _init_query(void **initializer_list)
+{
+	((query_t*)(*initializer_list))->is_inside = false;
+	((query_t*)(*initializer_list))->size = 0;
+	((query_t*)(*initializer_list))->cap = 0;
+	((query_t*)(*initializer_list))->expression_count = 0;
+	((query_t*)(*initializer_list))->expansion_count = 0;
+	((query_t*)(*initializer_list))->ident_count = 0;
+	((query_t*)(*initializer_list))->cmd = NULL;
+	((query_t*)(*initializer_list))->tokens = NULL;
+	((query_t*)(*initializer_list))->cols = NULL;
 }
